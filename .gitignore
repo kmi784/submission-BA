@@ -1,0 +1,14 @@
+.vscode
+
+literature
+old
+submission
+workbench
+
+
+# Output files 
+*.pdf
+*.txt
+*.log
+
+
