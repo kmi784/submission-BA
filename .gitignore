@@ -5,9 +5,9 @@ old
 submission
 workbench
 
-
 # Output files 
 *.pdf
 !thesis.pdf
 *.txt
+!data/plots/**/*.txt
 *.log
