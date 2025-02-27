@@ -17,7 +17,7 @@ using std::vector;
 
 
 /**** Simulation-algorithm ****/ #define LINEUPDATE false
-/**** lattice-length **********/ const int L = 128;
+/**** lattice-length **********/ const int L = 32;
 /**** NN-interaction **********/ const double J1 = 1.0;                                      
 /**** NNN-interactions ********/ const double J2 = -0.5;
 /**** Number of threads *******/ const unsigned int Nthread = 4;
