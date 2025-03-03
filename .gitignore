@@ -1,13 +1,20 @@
 .vscode
 
-literature
-old
-submission
-workbench
+bin/*
+!bin/.gitkeep
 
+data/raw/dynm/*
+!data/raw/dynm/.gitkeep
+data/raw/equi/*
+!data/raw/equi/.gitkeep
+data/snap/*
+!data/snap/.gitkeep
+
+
+literature
+raw/dynm/
 # Output files 
+*.png
 *.pdf
 !thesis.pdf
-*.txt
-!data/plots/**/*.txt
 *.log
