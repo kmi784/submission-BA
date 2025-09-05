@@ -16,7 +16,7 @@ using std::pair;
 using std::vector;
 
 
-/**** Simulation-algorithm ****/ #define LINEUPDATE false
+/**** Simulation-algorithm ****/ #define LINEUPDATE true
 /**** lattice-length **********/ const int L = 32;
 /**** NN-interaction **********/ const double J1 = 1.0;                                      
 /**** NNN-interactions ********/ const double J2 = -0.5;
