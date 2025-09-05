@@ -1,24 +1,16 @@
+FILE := mean.cpp
+FLAGS := -std=c++20 -O2
 
-#********** Compiler command **********
-FILE := $(if $(FILE), $(FILE), peak.cpp)
-ARG := $(if $(ARG), $(ARG), ../../data/kalz/L30-U ./peak.txt 50 0.35 0.4 200)
+ARG := ../../data/raw/equi/L30-U ./mean.txt 30 
+#ARG := ../../data/raw/equi/L30-U ./peak.txt 50 0.35 0.4 200
+#ARG := ../../data/raw/equi/L30-U ./wham.txt 0.35 0.55 200
 
-FLAGS := -std=c++20 -Wall -Wpedantic -Wsign-conversion 
-COMPILER := g++ 
-
-
-
-#********** Debugging configurations **********
 debug: $(FILE) 
-	$(COMPILER) $(FLAGS) $(FILE) -o debug
+	g++ $(FLAGS) -Wall -Wpedantic -Wsign-conversion $(FILE) -o debug
 	time ./debug $(ARG)
 
-
-#********** Release configurations **********
 release:
-	$(COMPILER) -std=c++20 -O2 $(FILE) -o $(DIR)
+	g++ $(FLAGS) $(FILE) -o ../../bin/$(basename $(FILE))
 
-
-#********** Clean **********
 clean:
 	rm -rf debug *.txt

@@ -1,18 +1,12 @@
-
 import os
+from pathlib import Path
+
 import numpy as np
 from scipy.optimize import curve_fit
 
-
-
-#******************** Arguments ********************#
-target = "../../data/timmons/L128-U-line/"           # relative path + name to target "L_-_/"
-min, max = 0.31, 0.6                               # temperture range
-plot = True                                         # generates plot with gnuplot
-#***************************************************#
-
-
-
+target = f"{Path(__file__).parent / "../../data/raw/dynm/L128-U-line"}/" # relative path + name to target "L_-_/"
+min, max = 0.31, 0.6 # temperture range
+plot = False # generates plot with gnuplot
 
 def find_range(y : np.array) :
     min = 0; max = 0
@@ -35,10 +29,6 @@ def tau_star(fit : list, cov : list) :
 
     return t, error
 
-
-
-
-#*************** Load data ***************#
 Plot = []
 with open(target + "relax.txt", "w") as file :
     for T in np.round(np.linspace(min, max, num=int(100*(max-min))+2), 2) :
@@ -74,8 +64,6 @@ if plot :
             "set logscale y exp(1)\n" +
             "set grid"
         )
-
-
 
         for plot in Plot :
             file.write(

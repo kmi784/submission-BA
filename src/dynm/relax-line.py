@@ -1,12 +1,10 @@
+import glob
+from pathlib import Path
 
 import numpy as np
-import glob
 
-
-#******************** Arguments ********************#
-target = "../../data/timmons/L64-U-line/"           # relative path + name to target "L_-_/"
-Temperatures = [0.32, 0.33, 0.34]             # tempertures
-#***************************************************#
+target = f"{Path(__file__).parent / "../../data/raw/dynm/L64-U-line"}/" # relative path + name to target "L_-_/"
+Temperatures = [0.32, 0.33, 0.34] # tempertures
 
 
 new_lines = []
@@ -31,11 +29,9 @@ for path in sorted(glob.glob(target + "*")) :
                 new_lines.append(new_line)
                 input.close()
 
-
 input = open(target + "relax.txt", "r")
 old_lines = input.readlines()
 input.close()
-
 
 output = open("relax.txt", "w")
 for line in old_lines :

@@ -7,7 +7,7 @@ debug: $(FILE) system.hpp
 	time ./debug $(ARG)
 
 release:
-	g++ $(FILE) -o ../../../bin/$(NAME)
+	g++ $(FILE) -o ../../../bin/dynm-$(L)-$(ALGORITHM)
 
 clean:
 	rm -rf debug L*

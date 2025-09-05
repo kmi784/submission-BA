@@ -14,47 +14,38 @@ using std::pair;
 using std::vector;
 
 
-/**** Simulation-algorithm ****/ #define LINEUPDATE true
-/**** lattice-length **********/ const int L = 30;
+/**** Simulation-algorithm ****/ #define LINEUPDATE false
+/**** lattice-length **********/ const int L = 120;
 /**** NN-interaction **********/ const double J1 = 1.0;                                      
 /**** NNN-interactions ********/ const double J2 = -0.5;
-/**** Double precision ********/ const double epsilon = 1e-5;   
+                                                                                                        
 
 
 
-
-
-
-struct Histogram{
-    vector<double> Energy;                      // energy-bins
-    vector<unsigned int> Count;                 // histogram
+struct Run{
+    double Temperature;     // temperture of simulation point
+    unsigned int Ndata;     // number of collected measurements
+    double RS, RL;          // rate of accepted spin-, line-flip-proposals 
 
     struct Orderparameter{
-        double F,S;
+        double F = 0.0, H = 0.0, V = 0.0;
 
-        Orderparameter(int MF=0, int MH=0, int MV=0){
-            F = (double)abs(MF)/(L*L);
-            S = abs(MH)<=abs(MV) ? (double)abs(MV)/(L*L) : (double)abs(MH)/(L*L);
-        }
-
-        void operator+=(Orderparameter a){F+=a.F; S+=a.S;}
-        Orderparameter operator*(Orderparameter a){
-            Orderparameter out; out.F = F*a.F; out.S = S*a.S;
-            return out;
-        }
+        void operator+=(Orderparameter a){F += a.F; H += a.H; V += a.V;}
+        void operator/=(double a){F /= a; H /= a; V /= a;}
+        Orderparameter operator*(Orderparameter a){return {F*a.F, H*a.H, V*a.V};}
     };
 
-    vector<Orderparameter> Magnetization1;      // first moment magnetization-list
-    vector<Orderparameter> Magnetization2;      // second moment magnetization-list
+    Orderparameter* linear;         // pointer to spin-autocorrelation function
+    Orderparameter* quadradic;      // pointer to spin-autocorrelation function to the square (for error estimation)
 
-    friend std::ostream& operator<<(std::ostream&, const Histogram&);
-    friend std::istream& operator>>(std::istream&, Histogram&);
 
-    void push_back(double E, unsigned int N, Orderparameter M){
-        Energy.push_back(E); Count.push_back(N); Magnetization1.push_back(M); Magnetization2.push_back(M*M);
-    }
+    Run(double, unsigned int);      // Constructor of simulation point 1: Temperature   2: number of measurements 
+    Run(const Run&);                // Copy-constructor necessary for 'push_back()' function
+    ~Run();                         // Destructor
 
-    unsigned int size()const{return Energy.size();}
+
+    void operator/=(double);                                        // normalization for the mean of the runs 
+    void acceptancerate(long unsigned int, long unsigned int);      // evaluation rate of accepted spin-, line-flip-proposals 
 };
 
 
@@ -65,7 +56,6 @@ struct Histogram{
 class System{
     private:
         bool* Lattice;                                          // spin-lattice
-        double Energy;                                          // energy 
         int MagnetizationF, MagnetizationH, MagnetizationV;     // ferromagnetic-, horizontal-stripped- and vertical-stripped magnetization
 
         std::mt19937 gen;                                       // PRNG-engine Mersenne-Twister
@@ -99,14 +89,13 @@ class System{
                                             //                              'V'=vertical-stripped,  'U'= high temperature initial state 
                                             //                           2: PRNG-engine seed
         ~System();                          // Destructur of the system
-
-        friend std::ostream& operator<<(std::ostream&, const System&);
-        friend std::istream& operator>>(std::istream&, System&);
         
         void metropolis(double*, unsigned int=1);           // conventional metropolis algorithm
         void lineupdate(double*, double, unsigned int=1);   // metropolis algorithm with line-flip changing-rule
+        long unsigned int NS, NL;                           // number of accepted spinflips, lineflips
 
-        void count(Histogram&);                             // counts occurance energy and determines corresponding magnetization lists
+
+        Run::Orderparameter correlation(unsigned int);      // computes spin-autocorrelation function at time and temperture
 };
 
 #endif

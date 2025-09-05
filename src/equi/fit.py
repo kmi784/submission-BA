@@ -1,19 +1,13 @@
-
-
-#*************** Parameter ***************#
-target = "fit.txt" 
-dir = "../../data/kalz/"
-min = 0                                
-#*****************************************#
-
-
-
-
+import time
+from pathlib import Path
 
 import numpy as np 
 import gvar as gv
-import time
 from scipy.optimize import curve_fit
+
+target = "fit.txt" 
+dir = f"{Path(__file__).parent / "../../data/raw/equi"}/"
+min = 0                                
 
 def power(L, A, rho) :
     return A*L**rho
@@ -25,15 +19,9 @@ def chi2(y : np.array, fit : np.array, error : np.array) :
     return np.sum(((y-fit)/error)**2)
 
 save = open("fit.log", "a")
-
-
-
-
-
-#*************** Load data ***************#
 save.write(
     "\n*************************************************************************\n" +
-    "Target             :" + dir + target + "\n" +
+    "Target             :" + target + "\n" +
     "Time               :" + str(time.ctime()) + "\n\n"
 )
 
@@ -46,13 +34,8 @@ for i in range(0, len(L)) :
     )   
 save.write("\n")
 
-
-
-#*************** Data analysis ***************#
 fit1, cov1 = curve_fit(power, L, T, sigma=errorT)
 fit2, cov2 = curve_fit(expo, L, T, sigma=errorT)
-
-
 
 save.write(
     "$" + str(gv.gvar(fit1[0], np.sqrt(cov1[0][0]))) + "$ & $" 
@@ -67,5 +50,3 @@ save.write(
 save.write(
     "A = " + str(fit1[0]) + "\nrho = " + str(fit1[1]) + "\nA = " + str(fit2[0]) + "\nL0 = " + str(fit2[1]) + "\n"
 )
-
-
