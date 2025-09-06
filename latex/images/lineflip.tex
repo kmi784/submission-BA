@@ -1,0 +1,33 @@
+
+
+\begin{tikzpicture}
+    \matrix[
+        matrix of math nodes,
+        matrix anchor=west,
+        row sep=2ex,
+        column sep=2ex,
+        ] (m1) at (0,0)
+        {
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\                 
+        };
+    \matrix[
+        matrix of math nodes,
+        matrix anchor=west,
+        row sep=2ex,
+        column sep=2ex,
+        ] (m2) at (5,0)
+        {
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE  & \upF\doE \\                          
+        };
+        \begin{scope}[on background layer]
+            \node[fit=(m1-2-1)(m1-2-4), fill=white!70!black, rounded corners] {};
+            \node[fit=(m2-1-2)(m2-4-2), fill=white!70!black, rounded corners] {};            
+        \end{scope}                                                             
+        ; 
+\end{tikzpicture}

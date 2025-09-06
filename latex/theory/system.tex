@@ -1,0 +1,72 @@
+\label{cha:physics}
+
+
+The model treated is a variation of the conventional Ising model in two dimensions with nearest neighbor interactions 
+(NN-interactions). In this work, the next nearest neighbor interactions (NNN-interactions) are additionally considered. 
+Therefore, the Hamiltonian is given by 
+\begin{align}
+    \mathcal{H}(\bm{\sigma})=-J_1\sum_{\langle ij \rangle}\sigma_i\sigma_j-J_2\sum_{[ij]}\sigma_i\sigma_j,
+    \label{align:Hamiltonian}
+\end{align}
+where $\bm{\sigma}\!\in\!\{-\!1,1\}^N$ denotes the microstate with $N$ spins, $\sigma_i$ the components of $\bm{\sigma}$, 
+$J_1\!>\!0,J_2\!<\!0$ are coupling constants, $\langle ij \rangle$ denotes the NN-interactions and $[ij]$ the NNN-interactions. The 
+studies in this thesis are limited to square lattices with periodic boundary conditions, therefore the total number of spins in a system with 
+the lattice length $L$ is $N\!=\!L^2$. 
+
+
+\section{Ground-state properties}
+\label{sec:GroundState}
+
+During the discussion of the ground-state properties of the system described above, Timmons et al. refer in their work~\cite{Timmons2018} to a paper 
+of Fan and Wu~\cite{Fan1970} from 1969, containing quite a general analysis of ground-state properties of the vertex model for different 
+cases. They mention that for $J_2\in(-\!J_1/2,0]$, the system has a ferromagnetic ground-state, i.e., that all $\sigma_i$ are  either $+\!1$ or $-\!1$. 
+To determine the ground-state energy consider the left lattice in Figure~\ref{fig:system1}. 
+\begin{figure}[!h]
+    \centering
+        \input{images/groundstate1.tex}
+    \caption{ 
+                The sketch shows the possible ground-state patterns (left) for $J_2\in(-\!J_1/2,0]$, (middle) and (right) for 
+                $J_2\in(-\!\infty,-\!J_1/2)$. The solid lines represent the NN-interactions and the dashed ones the 
+                NNN-interactions. 
+            }
+    \label{fig:system1}
+\end{figure}
+Each bond drawn contributes $\pm1$ to the sums in the Hamiltonian~\eqref{align:Hamiltonian}, they all are $+\!1$ in the case depicted. To avoid double
+summations, sum only over the bonds drawn red for each lattice site. Therefore, one obtains the ground-state energy through a 
+summation over the whole lattice $$E_0=\sum_{i=1}^{N}\left( -J_1\cdot2-J_2\cdot2 \right)=-2N(J_1+J_2).$$
+For $J_2\in(-\!\infty,-\!J_1/2)$, the system has a super-antiferromagnetic ground-state~\cite{Timmons2018}. Thus, the spins order in
+striped patterns of alternating spin values, shown in Figure~\ref{fig:system1} (middle and right lattice). The ground-state energy 
+of these four possible states can be computed analogously to the previous case, with the difference that the NN-interactions cancel out for 
+each lattice site. Hence, the ground-state energy is given by $$E_0=\sum_{i=1}^{N}\left( -J_1\cdot(1-1)-J_2\cdot(-2) \right)=2NJ_2.$$
+
+Comparing these two ground-state energies, one obtains a special case for $J_2=-\!\frac{J_1}{2}$ because then, the two energy-levels 
+coincide. This value of $J_2$ separates these two ground-state regimes, called in the following critical point. At the critical point, the system 
+has more than the six ground-states of Figure~\ref{fig:system1}. To obtain the other ground-states, regard
+the sketches in Figure~\ref{fig:system2}. Flipping the highlighted lines of aligned spins in the sketched environment, the energy of the 
+system does not change.   
+\begin{figure}[!h]
+    \centering
+        \input{images/groundstate2.tex}
+    \caption{ 
+                The sections of horizontal ground-state patterns for the system at the critical point are depicted. The highlighted rows correspond 
+                to the lines that are getting flipped.  
+            }
+    \label{fig:system2}
+\end{figure}
+To see that, let $E_{\mathrm{new}/\mathrm{old}}$ be the part of the energy, the highlighted line contributes to. For the left sketch
+in Figure~\ref{fig:system2} 
+\begin{align*}
+    E_\mathrm{new}-E_\mathrm{old}&=(-J_1L\!\cdot\!(2-2)-J_2L\!\cdot\!(-4))-(-J_1L\!\cdot\!4-J_2L\!\cdot\!4)\\
+                                 &= -2J_1L-(-2J_1L)=0
+\end{align*}
+holds. For the right graphic one obtains
+\begin{align*}
+    E_\mathrm{new}-E_\mathrm{old}&=(-J_1L\!\cdot\!(3-1)-J_2L\!\cdot\!(2-2))-(-J_1L\!\cdot\!(3-1)-J_2L\!\cdot\!(2-2))\\
+                                 &= -2J_1L-(-2J_1L)=0.
+\end{align*}
+Hence, the two processes do not change the energy of the system and one can construct with these two line flips a total of $2^L$ other
+ground-states. For the vertical pattern one can construct in an analogous way $2^L$ ground-states, as well. Both cases contain the ferromagnetic 
+ground-states, therefore the total number of ground-states generated has to be subtracted by $2$, finally leading to a degeneracy of 
+$2^{L+1}\!-\!2$~\cite{Kalz2008}.
+
+

@@ -1,0 +1,275 @@
+
+\section{Data interpretation}
+
+\label{sec:discussion}
+
+The procedure of data collection is separated from the interpretation, because the collected data is indisputable, but the interpretation is up for debate
+and does not deliver a final conclusion. In this Section~\ref{sec:discussion}, all simulation results of the previous two Sections are analyzed and connected to the physical 
+properties depicted in Chapter~\ref{cha:physics}, particularly to the statistical physics treatment and to the
+studies of critical phenomena, mentioned in Section~\ref{sec:statistical_physics} and~\ref{sec:phase_transitions}.
+
+\subsection*{Equilibrium properties}
+
+Considering the energy dependent observables in Figure~\ref{fig:energy}, the behavior of the internal energy per lattice site as a function of $T$ exhibits 
+an inflection point with a positive slope. This implies a maximum of its first derivative, more precisely of the specific heat $c_V$ according to the 
+first equal sign in Equation~\eqref{align:heat}. Generally, a maximum in the specific heat data for finite system sizes may indicate critical phenomena,
+which is not always the case, e.g., the one dimensional Ising model. Especially the narrowing and the slightly growing when increasing $L$ suggests a 
+divergence in the thermodynamic limit. The movement of the maximum locations proposes $T_\mathrm{max}\!=\!0$ for $N\!\to\!\infty$, i.e., the system does not 
+undergo a phase transition at a finite temperature. To confirm this presumption, the data in Table~\ref{table:heat} is fitted to two different laws 
+connecting the temperature near criticality with the spatial correlation length, i.e., the lattice length $L$ for the finite systems under consideration.
+
+The first law is originated by a paper of Kalz et al.~\cite{Kalz2008}, suggesting a power divergence of the spatial correlation length according to the 
+continuous phase transitions with singularities in the second derivatives of the free energy. With Equation~\eqref{align:FSS_power} under the assumption 
+of $T_c\!=\!0$ and the redefinition $\rho\!=\!-1/\nu$, the corresponding fit function results in
+\begin{align*}
+  T_\mathrm{max}(L)=A\cdot L^{\rho},
+\end{align*}
+where $A$ denotes some proportional constant. 
+
+\begin{figure}[!h]
+  \includegraphics{fits_Tmax.eps}
+  \caption{The mentioned fit approaches are plotted in this figure with rescaled axes such that the corresponding law behaves linear.}
+  \label{fig:fits_heat}
+\end{figure}
+
+The second law is introduced by a work of Lee et al.~\cite{Lee2024}, predicting
+an exponential divergence in the fashion of Equation~\eqref{align:FSS_exponential}. Landau et al. study the considered system for 
+varying $J_2/J_1$ ~\cite{Landau1980}. They conclude $\overline{\nu}\!\approx\!1$ in an analysis of the critical temperature as function of these ratios 
+$T_c(J_2/J_1)$. With that and the assumption of $T_c\!=\!0$, the second fit function becomes 
+\begin{align*}
+  T_\mathrm{max}(L)=A\cdot\ln(L/L_0)^{-1},
+\end{align*}
+with some proportional constant $A$ and the characteristic length scale $L_0$. 
+
+The corresponding fits are realized with the least square approximation described in Section~\ref{sec:LeasatSquare}. 
+The best fits could be observed by taking finite size effects into account, i.e., the smallest lattice length $L\!=\!30$ is neglected. They are 
+shown in Figure~\ref{fig:fits_heat}, the associated model parameters and $\chi^2$-values are depicted in Table~\ref{table:fits_heat}.
+
+
+The model of the exponential divergence shows a normalized $\chi^2$-value close to the ideal value $1$, suggesting a model 
+representing the observed data. Further, the corresponding model parameters agree with the depicted one in Ref.~\cite{Lee2024}, 
+$L_{0,\mathrm{Lee}}\!=\!e^{-0.736}\!=\!0.479$. 
+
+
+The normalized $\chi^2$-value of the power divergence approach is much larger than the ideal one, implying 
+that the model does not represent the observed data. Unfortunately, its determined model parameters deviates from the presented ones in Ref.~\cite{Kalz2008}, 
+$A_\mathrm{Kalz}\!=\!0.881(1)$ and $\rho_\mathrm{Kalz}\!=\!-\!0.214(1)$, even taking all of the uncertainties into account. The best agreements to the 
+presented ones in Ref.~\cite{Kalz2008} could be observed by neglecting finite size effects\footnote{Taking $L\!=\!30$ into account and accepting higher $\chi^2$-values 
+results in $A\!=\!0.878(15)$, $\rho\!=\!-0.2123(40)$ and $\chi^2/\mathrm{dof}\!=\!68.137$ for the power divergence.}.
+\\
+
+\begin{table}[h]
+  \centering
+    \begin{tabular}{|lll|}
+      \multicolumn{3}{l}{power divergence} \\
+      \hline
+      $A$ & $\rho$ & $\chi^2/\mathrm{dof}$ \\
+      \hline
+      $0.838(11)$ & $-0.2020(31)$ & $19.042$ \\
+      \hline
+      \multicolumn{3}{l}{}\\
+      \multicolumn{3}{l}{exponential divergence} \\
+      \hline
+      $A$ & $L_0$ & $\chi^2/\mathrm{dof}$ \\
+      \hline
+      $1.7609(87)$ & $0.485(12)$ & $2.08$ \\
+      \hline
+    \end{tabular}
+  \caption{The model parameters and $\chi^2$-values of the least square approximations are shown for the corresponding divergence law.}
+  \label{table:fits_heat}
+\end{table}
+
+
+The final consideration treats the magnetic observables for the ferromagnetic and super-antiferromagnetic cases in Figure~\ref{fig:magnet}. 
+The associated magnetization per lattice site increase slightly when lowering temperature until a plateau is reached.
+Perhaps, this behavior results from coexisting domains of ferromagnetic and super-antiferromagnetic ordering similarities. Further, the numerical
+values of the plateaus decrease when increasing $L$. 
+
+This can be explained by the consideration of the observables $|\mathcal{M}_{(\cdot)}(\bm{\sigma})|$ 
+as the square root of the random variable $Y_{(\cdot)}$ defined by
+$$Y_{(\cdot)}\!=\!\sum_{i=1}^{N}\sigma_{(\cdot),i}^2,$$
+where $\sigma_{(\cdot),i}$ denotes the conventional or super-antiferromagnetic spin values. According to the Central Limit Theorem~\cite[p.246]{Behrends2013}, it should 
+$\langle Y_{(\cdot)}\rangle\!=\!N\langle\sigma_{(\cdot),i}^2\rangle$ holds with the expectation value $\langle\sigma_{(\cdot),i}^2\rangle$, being independent of $N$.
+Its square root can be estimated by $(\hat{Y}_i/N)^{1/2}\!=\!M_{(\cdot)}/\sqrt{N}$. Hence, the plateaus of the magnetization divided by $\sqrt{N}$ coincides at a 
+numerical value, shown in Figure~\ref{fig:magnet_disscussion}. 
+
+The corresponding susceptibilities as function of $T$ show a declining exceed but no peak 
+in the temperature range with significant behavior of $E$ and $c$.
+
+\begin{figure}[!h]
+  \includegraphics{magnet_disscussion.eps}
+  \caption{This figure depicts the presumed coinciding of the magnetization plateaus.}
+  \label{fig:magnet_disscussion}
+\end{figure}
+
+
+
+\subsection*{Dynamical properties}
+
+The measured spin autocorrelation function $G_{(\cdot)}(t_1,t_2)$, Equation~\eqref{align:spin_correlation}, evaluates changes of 
+similarities after a duration under the premise of ordering, i.e., $G_{(\cdot)}(t_1,t_2)$ becomes $1$ if 
+$\bm{\sigma}(t_1)$ and $\bm{\sigma}(t_2)$ appear equally similar or equally dissimilar under the corresponding premise 
+and becomes less $1$ if these states have changes in their similarities. The above ordering premise is associated to the ferromagnetic, 
+horizontal and vertical striped patterns. In the following, the data of $G_{(\cdot)}(t_1,t_2)$, received by the non-equilibrium protocols described in 
+Section~\ref{sec:timmons_experiment}, is interpreted for the warming run (high $T$ quench) and cooling run (low $T$ quench). During these
+examinations, the procedure is performed for single spin update, to check the consistency to the findings in Ref.~\cite{Timmons2018}. Further, this routine is 
+repeated for the line spin update, to conclude that the findings in Ref.~\cite{Timmons2018} are perhaps indications of a glassy behavior or of a 
+dynamic effects of the used simulation algorithm.
+
+\subsubsection*{High temperature quench}
+
+In the following, the term "exceeding range" intends to the temperature range where $G_{(\cdot)}(t_1,t_2)$ 
+increases effectively from $0.1$ to $0.9$ and the explanation refer to the spin autocorrelations $G_{(\cdot)}(0,t^*)$ of the single spin update in 
+Figure~\ref{fig:auto} (left column). The exceeding range moves slowly to lower $T$ when increasing the time $t^*$ of the measurement.
+
+For small 
+$t^*$ in the exceeding range, there are system size dependent differences of $G_{(\cdot)}(0,t^*)$ noticeable. A system with a smaller lattice 
+length $L$ appears more correlated for higher temperatures $T$, which may be originated by a smaller absolute number of spin flip proposals 
+(sweeps $\propto L^2$) during a nearly unvarying acceptance rate, Figure~\ref{fig:prop}.
+
+This behavior should be fading for a higher statistics, 
+and indeed it is the case for larger $t^*$. All of the $G_{(\cdot)}(0,t^*)$ remain in excess for low $T$ at large $t^*$, originated by the 
+frustration of the system.
+
+Considering the plot of $G_{(\cdot)}(0,t^*\!=\!90000)$ in Figure~\ref{fig:auto} (left column), the ferromagnetic spin 
+autocorrelation drops slightly at lower $T$ for the warming run with a ferromagnetic initialization. Therefore, the pattern at $t^*\!=\!90000$ slightly 
+deviates in average from the initial one, resulting in a small decline of $G_{(\cdot)}(0,t^*)$. In comparison, the $G_{(\cdot)}(0,t^*\!=\!90000)$ 
+of the other ordering premises (striped) remains at a value close to $1$. Hence, the patterns of the microstates after $0$ and $90000$ sweeps appear equally 
+dissimilar under the striped ordering premises, because for a decrease of the striped spin autocorrelations, the system has to spontaneously order 
+(in average) in a striped state, being highly unlikely for systems with a high degeneracy $2^{L+1}\!-\!1$, Section~\ref{sec:GroundState}. Or simply put, 
+it is more likely for the system to transits into one of the many dissimilar states, then into one of the few similar states. It should be emphasized that 
+an analogous behavior could be observed for horizontal or vertical striped initialization. 
+\\
+\begin{figure}[!h]
+  \includegraphics{autoc_vs_accep.eps}
+  \caption{This plot combines the spin autocorrelations at $t^*\!=\!900$ and acceptance rates as a function of the temperature for the warming run of the 
+           line spin update. The right vertical axis refers to the values of the spin correlations (squares) and the left one to the logarithm of the 
+           acceptance rates (lines).}
+  \label{fig:autoc_vs_accep}
+\end{figure}
+
+Considering the spin autocorrelations of the line spin update in Figure~\ref{fig:auto} (right column), there are significant differences for small temperatures 
+to the single spin update visible. For low $T$, all of the spin autocorrelations $G_{(\cdot)}(0,t^*)$  drop immediately to $0$, because the line flip is accepted with a high 
+probability, Figure~\ref{fig:prop}, and they easily transit the system between the metastable states, Section~\ref{sec:GroundState}. This drop is originated 
+by the fact that a short sequence of line flips generates easily all the considered ordering patterns, 
+Section~\ref{sec:GroundState}. Hence, their application  destroys the similarities under the considered ordering premises within a few sweeps, resulting in
+a decrease of $G_{(\cdot)}(0,t^*)$. 
+
+The spin autocorrelations are only nonvanishing for small $t^*$, showing peaks. The following explanation connects this 
+behavior to the used update algorithm, referring to Figure~\ref{fig:autoc_vs_accep}.
+
+For the transitions between high temperature states (high $T$), a smaller amount of line flips in the update (spin and line flips) sequence results in smaller free energy 
+barriers. This fact and the relatively high acceptance rate of the spin flips  reduces the numerical value of $G_{(\cdot)}(0,t^*)$. 
+
+When lowering the temperature, the frustration emerges markedly and increases the spin autocorrelations until the line flip acceptance rate exceeds the 
+spin flip acceptance rate. A subsequent decline of $G_{(\cdot)}(0,t^*)$ to $0$ is the result of the further growing line flip acceptance rate. 
+
+When 
+increasing $L$, the peak enlarges and moves to lower $T$, caused by the movement 
+of the intersection point of the corresponding acceptance rates. This movement is originated by lower energy costs of line flips for smaller $L$, 
+effecting a higher acceptance probability with fixed $T$ ($\propto\exp(-\Delta E/kT)$), Section~\ref{sec:MCsimulations}. Thus, for small $L$ the 
+line flip acceptance exceeds the spin flip acceptance at higher $T$. 
+
+Another, finding is the slight increase of the $G_{(\cdot)}(0,t^*)$ errors, 
+when the line flip update markedly emerges. It should be emphasized that all of the observations are independent of the initialization state and of 
+the considered ordering premise.
+
+
+\subsubsection*{Low temperature quench}
+
+Considering the obtained relaxation times for the dependent cooling run in Figure \ref{fig:relax}, the data of the single spin update shows a 
+rapid increase when lowering $T$. 
+
+This suggests a divergence, and therefore an indication of a glassy behavior, Section \ref{sec:phase_transitions}.
+In analogy to Ref.~\cite{Timmons2018}, the nature of the divergence is assumed according to a power law, leading to the fit function 
+\begin{align*}
+  \tau(T)=A|T-T_g|^\rho.
+\end{align*}
+Performing the least square approximation with this model leads to an estimate of glass transition temperature $T_g$. The same data is fitted to 
+the Vogel-Fulcher law~\eqref{align:Vogel_Fulcher} as well as in Ref.~\cite{Timmons2018}, implying the fit model
+\begin{align*}
+  \tau(T)=A\exp(c/(T-T_K)).
+\end{align*}
+This delivers a method to estimate the ideal glass transition temperature $T_K$, Section~\ref{sec:phase_transitions}. 
+
+The corresponding fits and determined
+parameters are depicted in Figure~\ref{fig:fits_relax} and Table~\ref{table:fits_relax}. All of the obtained model parameters are slightly out of the 
+tolerances in comparison to the values in Ref.~\cite{Timmons2018}, $T_g\!=\!0.261(1)$, $\rho\!=\!3.38(2)$ and $T_K\!=\!0.091(5)$. Perhaps, this results from
+the low statistics of the used data, because the means and the errors are obtained by only four different runs\footnote{The low statics is accepted to 
+limit the corresponding computing time to 6 days.}. The deviations of $T_g$ may be caused by a differently chosen cooling rate then in Ref.~\cite{Timmons2018}.
+\\ 
+
+\begin{figure}[!h]
+  \includegraphics{fits_relax.eps}
+  \caption{The full logarithmic plots show the corresponding relaxation times as function of a rescaled temperature and the determined fit models.}
+  \label{fig:fits_relax}
+\end{figure}
+
+
+\begin{table}[h]
+  \centering
+    \begin{tabular}{|llll|}
+      \multicolumn{4}{l}{power law} \\
+      \hline
+      ordering premise & $A$ & $T_g$ & $\rho$ \\
+      \hline
+      ferromagnetic       & $3.67(72)$ & $0.2545(41)$ & $3.82(15)$ \\
+      horizontal striped & $3.36(61)$ & $0.2530(39)$ & $3.90(15)$ \\
+      vertical striped   & $3.32(60)$ & $0.2526(39)$ & $3.91(15)$ \\
+      \hline
+      \multicolumn{4}{l}{}\\
+      \multicolumn{4}{l}{Vogel-Fulcher law} \\
+      \hline
+      ordering premise & $A$ & $T_K$ & $c$ \\
+      \hline
+      ferromagnetic       & $4.1(1.5)$ & $0.135(11)$ & $1.91(18)$ \\
+      horizontal striped & $3.6(1.3)$ & $0.131(10)$ & $1.98(17)$ \\
+      vertical striped   & $3.5(1.2)$ & $0.131(10)$ & $1.98(17)$ \\
+      \hline
+    \end{tabular}
+  \caption{This table depicts the received parameters for the corresponding models.}
+  \label{table:fits_relax}
+\end{table}
+
+In comparison to $\tau$ of the single spin update, the relaxation times of the line spin update show no continuing increase rather an increase 
+with a subsequent sharp decline, Figure~\ref{fig:relax}. This behavior can be explained by considering Figure~\ref{fig:relax_vs_accep}, depicting 
+additionally the acceptance rates to the relaxation times. 
+
+It is noticeable that the relaxation times curves split when the line spin update 
+acceptance exceeds the single spin update one by some magnitudes. Hence, the visible differences result from the emerging line spin update as well.
+
+
+However, the measured values of the line spin update relaxation times remain at large numerical values, $\tau\!=\!4584(1358)$ at $T\!=\!0.31$, but 
+show no singular behavior.
+\\
+
+\begin{figure}[!h]
+  \includegraphics{relax_vs_accep.eps}
+  \caption{This plot combines the relaxation times and acceptance rates as a function of the temperature for $L\!=\!128$. The right vertical axis refers to
+  the values of the relaxation times (green) and the left one to the logarithm of the acceptance rates (black).}
+  \label{fig:relax_vs_accep}
+\end{figure}
+
+In a visual way, this is understandable through the snapshots in Figure~\ref{fig:snap}. Both algorithms transit the 
+system in near ground-state at low temperature within a sufficiently large number of sweeps. 
+
+However, it is hard to sample ground-state patterns
+with the single spin update, originated by the high energy costs of the necessary spin flip sequence resulting in an effectively freezing into an 
+explicit state. 
+
+On the other hand, the correct line flips cost no energy, and therefore the simulated system easily transits between ground-states, 
+implying a good ground-state sampling. This point of view is supported by the behavior of the corresponding acceptance rates, Figure~\ref{fig:prop}.   
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics{snap.eps}
+  \caption{This graphics shows snapshots for the single and line spin update at $T\!=\!0.3$ after $N_\mathrm{equi}\!=\!5\!\cdot\!10^{7}$ sweeps 
+           for a system initialized in a high temperature state with lattice length $L\!=\!120$.}
+  \label{fig:snap}
+\end{figure}
+
+\newpage
+
+
+
+

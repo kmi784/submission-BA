@@ -1,0 +1,29 @@
+\label{cha:conclusion}
+
+\section{Summary}
+
+For the equilibrium properties the results and the corresponding discussion of the simulated data lead to the following conclusion. 
+The analysis of the specific heat suggests a peak at the temperature $T_\mathrm{max}\!=\!0$ in the thermodynamic limit, 
+and hence the system exhibits no phase transition at a finite temperature. The exponential divergence presumption of the correlation 
+length Ref.~\cite{Lee2024} could be further supported, Table~\ref{table:fits_heat}. 
+There is no significant behavior of the magnetic observables findable within the considered temperature range.
+
+The dynamical properties of the single spin update depicts highly correlated measurements at low temperatures, resulting 
+from the frustrations. In comparison, the line spin update overcomes these frustrations and samples the low temperature range very well, 
+Figure~\ref{fig:auto}. For the quenches into a high temperature state (warming run), a memory effect, being noticeable by the spin autocorrelations remaining in excess, 
+could not be observed for the line spin updates, arguing against a glassy behavior, Figure~\ref{fig:auto}. The relaxation times of the low temperature
+quenches (cooling run) have quite a high value but no singular behavior for the line spin update. This does not fully contradict the glassy behavior. Nevertheless, 
+the findings suggests that the obtained behavior in Ref.~\cite{Timmons2018} is a dynamic effect of the used simulation algorithm. Therefore, 
+the apparent glassiness results perhaps from high frustration, particularly in combination with the single spin update. However, this presumption has to be further 
+verified by continuing studies.
+
+
+\section{Outlook}
+
+A possible continuing study is a variation of the system under consideration, in particular other boundary conditions e.g. free boundary conditions.
+Binder et al.~\cite{Binder1986} mention that a spin glass behavior is highly subjected to boundary conditions. Thus, similar observations could 
+support the glassiness. Another approach is to construct an order parameter in the fashion of Equation~\eqref{align:stripped_magnetization} with 
+the other ground-states in addition to the ferromagnetic, vertical and horizontal striped ones. However, this could be quite cumbersome in implementations for 
+larger system sizes, caused by a high degeneracy $2^{L+1}\!-\!1$, Section~\ref{sec:GroundState}. With this potential order parameter, studies of its 
+susceptibility appear to be more fruitful than these one associated to a single representative of the ground state.
+

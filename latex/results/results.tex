@@ -1,0 +1,149 @@
+\label{cha:results}
+
+
+In this thesis, the Monte Carlo simulation data is obtained using MCMC methods depicted in Subsection \ref{sec:MCsimulations}. Particularly, 
+the described single spin update and line spin update algorithms are used to simulate the system under consideration at different temperatures $T$. For the 
+numerical work the units are chosen such that $J_1\!=\!k\!=\!1$. Further, $T$ is measured in units of $J_1/k$. In this Chapter \ref{cha:results}, the term $M_{(\cdot)}$ refers to the estimates of the observable $|\mathcal{M}_{(\cdot)}(\bm{\sigma})|$.
+
+
+
+
+
+\section{Equilibrium properties}
+\label{sec:kalz_experiment}
+
+For the data collection of the free energy derivatives, the line spin update algorithm is used only. The system is simulated for the 
+lattice lengths $L\!\in\!\{30,40,50,...,120\}$ and the NNN-interaction constant $J_2\!=\!-0.5$, where the simulation parameters are chosen according to the
+Tables~\ref{table:experiment_kalz1} and~\ref{table:experiment_kalz2}. Additionally, some consistency checks are performed for $L\!\in\!\{50,80,100\}$ and 
+$J_2\!\in\!\{-0.3,-0.6\}$, Appendix~\ref{sec:kalz_checks}. The corresponding data is received through a single independent cooling run, i.e., 
+a different PRNG seed is used for each temperature. Furthermore, the system is initiated in a uniformly distributed state
+and is cooled to the corresponding temperature within a sufficient number of equilibration sweeps.
+
+\begin{figure}[!h]
+  \includegraphics{energy.eps}
+  \caption{The plots show the energy per lattice site (top) and specific heat (bottom) as function of the temperature for different lattice length.
+           The squares refer to the means and errors and the lines to the WHAM data.}
+  \label{fig:energy}
+\end{figure}
+
+Then, the internal energy $E$, Equation~\eqref{align:ener}, the conventional magnetization $M$, Equation~\eqref{align:magn}, specific heat $c_V$,
+Equation~\eqref{align:heat} and susceptibility $\chi$, Equation~\eqref{align:susc} are measured and shown in Figures~\ref{fig:energy} and~\ref{fig:magnet}. 
+Additionally, the data of the magnetization and susceptibility in the super-antiferromagnetic case Equation~\eqref{align:stripped_magnetization}
+are depicted as well, 
+Figure~\ref{fig:magnet}. 
+
+\begin{figure}[!h]
+  \includegraphics{magnet.eps}
+  \caption{The magnetization per lattice site and susceptibility are shown in this figure, the left column refers to the 
+           ferromagnetic observables and the right column to the super-antiferromagnetic ones.}
+  \label{fig:magnet}
+\end{figure}
+
+In the plots, all the means and errorbars are obtained by the Jackknife analysis described in Subsection~\ref{sec:error}. In addition,
+the density of states is estimated by WHAM, Section~\ref{sec:wham}, and hence the smooth curves of $E$ and $c$ could easily be received. For the observables 
+depending on the magnetization, the lists defined by Equation~\eqref{align:Lists} are stored for each energy-bin in addition to the histograms. 
+Thus, the resulting effective observables and the estimated density of states are combined to smooth curves of $M,M_S$ and $\chi,\chi_S$. 
+
+Further, the peak locations of the specific heat data are analyzed more accurately. The numerical values of the maxima and their errors are shown 
+in Table~\ref{table:heat}. They are obtained by measuring smaller histograms during the simulation run. Afterwards, the entire histogram of a simulation point 
+is subtracted by these smaller histograms, resulting in a set of Jackknife histograms. These Jackknife histograms are combined to a set of densities
+of states estimated by WHAM, succeeding in a set of specific heat curves and their peak locations $(T_\mathrm{max},c_{V,\mathrm{max}})$. The mean of
+these maximums is determined by the conventional average and their error are computed taking the square root of Equation~\eqref{align:Jackknife}.
+
+\begin{table}[h]
+  \centering
+    \begin{tabular}{|lllll|}
+      \hline
+      $L$ & $T_\mathrm{max}$ & $c_{V,\mathrm{max}}$ & $T_\mathrm{max}$ in Ref.~\cite{Kalz2008} & $T_\mathrm{max}$ in Ref.~\cite{Lee2024} \\
+      \hline
+      $30$  & $0.42946(24)$ & $0.8187(27)$  & $0.4289$  & $0.4293$ \\ 
+      $40$  & $0.39969(27)$ & $0.8289(53)$  & $0.3988$  & $0.3996$ \\ 
+      $50$  & $0.37933(31)$ & $0.8497(88)$  & $0.3798$  & $0.3799$ \\ 
+      $60$  & $0.36492(38)$ & $0.874(13)$   & $0.3668$  & $0.3653$ \\ 
+      $70$  & $0.35374(33)$ & $0.869(16)$   & $0.3536$  & $0.3541$ \\ 
+      $80$  & $0.34522(27)$ & $0.884(16)$   & $0.3449$  & $0.3447$ \\ 
+      $90$  & $0.33692(33)$ & $0.891(19)$   & $0.3356$  & $0.3373$ \\ 
+      $100$ & $0.33054(25)$ & $0.899(18)$   & $0.3311$  & $0.3307$ \\ 
+      $110$ & $0.32483(24)$ & $0.958(22)$   & $-$       & $0.3256$ \\ 
+      $120$ & $0.31968(23)$ & $0.945(28)$   & $0.3188$  & $0.3209$ \\ 
+      \hline
+    \end{tabular}
+  \caption{This table depicts the specific heat peak locations corresponding to the lattice lengths and the reference data.}
+  \label{table:heat}
+\end{table}
+
+
+
+\section{Dynamical properties}
+\label{sec:timmons_experiment}
+
+For the studies of the spin autocorrelation function $G(t_1,t_2)$, described by Equation~\eqref{align:spin_correlation} and their vertical and 
+horizontal striped modifications, both the single spin update and the line spin update are employed. In the following, 
+$t_1\!=\!0$ refers to the time of the beginning data collection, i.e., $\bm{\sigma}(t_1\!=\!0)$ corresponds to the state of the system after the 
+equilibration period. In this fashion, $t_2$ refers to the time of the measurement in units of single spin sweeps, i.e., only the single spin flip proposals 
+contributes to a sweep. The system is simulated for the lattice length $L\!\in\!\{32,64,128\}$ and the NNN-interaction constant 
+$J_2\!=\!-0.5$ by a dependent run in analogy to Ref.~\cite{Timmons2018}, i.e., the system is initialized in state 
+referring to a low (or high) temperature, before it is slowly cooled (or warmed) to the nearest temperature and so on. A sufficient 
+number of equilibration sweeps are performed between each temperature change, Figure~\ref{fig:protocol}. All of the data presented and in particular the errors are obtained by multiple
+dependent runs with different PRNG seeds. Hence, the thermodynamic expectation value of the measured autocorrelation function Equation~\eqref{align:spin_correlation}
+is substituted by the configurational expectation value. This replacement and method of error observation is motivated by the possibility that the 
+system undergoes a glassy transition for $J_2\!=\!-0.5$. Therefore, the equilibrium assumption of the probability distribution underlying
+the measurements  may be violated as well as the time translation invariance of the autocorrelation function mentioned in Section~\ref{sec:error}. In other
+words $G(t_1,t_2)$ is not a function of the time delay $t_2\!-\!t_1$ and the expectation value appearing in $G(t_1,t_2)$ cannot be estimated by a single
+run. 
+
+\begin{figure}[!h]
+  \includegraphics{protocol.eps}
+  \caption{The figure depicts the scheme of data collection for the high $T$ quench (warming run) and the low $T$ quench (cooling run), 
+           where $N_\mathrm{m}$ denotes the sweeps for data collection of $G(t_1,t_2)$ and $N_\mathrm{c}$ denotes the number of equilibration sweeps.}
+  \label{fig:protocol}
+\end{figure}
+
+The dependent warming runs are performed with the ferromagnetic, horizontal and vertical striped initial states (Figure~\ref{fig:protocol}), the corresponding simulation parameters are 
+chosen according to Table~\ref{table:experiment_timmons}. The values of the spin autocorrelation functions are measured for varying temperatures at $t_1\!=\!0$ 
+and different $t_2$. The data shows no significant changes for different initial states, and thus only the case with the ferromagnetic initial state is shown in 
+Figure~\ref{fig:auto}. Additionally, the acceptance rate $r_\mathrm{a}$ of the single spin flip proposals and the line flip proposals are measured and
+shown in Figure~\ref{fig:prop}.
+ 
+\begin{figure}[!h]
+  \includegraphics{autocorrelation.eps}
+  \caption{This plot shows the different variations of the spin autocorrelation functions at $t_1^*\!=\!900$, 
+           $t_2^*\!=\!9000$ and $t_3^*\!=\!90000$ as a function of $T$ for the corresponding update algorithms.}
+  \label{fig:auto}
+\end{figure}
+
+\begin{figure}[!h]
+  \includegraphics{acceptance.eps}
+  \caption{The acceptance rates are shown for the corresponding simulation algorithms and the lattice length.}
+  \label{fig:prop}
+\end{figure}
+ 
+For the dependent cooling run, the simulated system size is $L\!=\!128$ with the depicted simulation parameters in Table~\ref{table:experiment_timmons}. The system under consideration
+is initiated in a high temperature state, corresponding to spin values distributed uniformly. Afterwards, it is cooled to the considered temperatures and the 
+corresponding spin autocorrelation functions are measured analogously to the warming run (Figure~\ref{fig:protocol}). Their relaxation times $\tau$ are defined as the time the autocorrelation 
+function falls below the numerical value $0.01$ for a fixed temperature, in analogy to Timmons et al.~\cite{Timmons2018}. The autocorrelation functions are approximated 
+according to the exponential decay, Relation~\eqref{align:autoTimeExp}, using ranged least square approximations, Section~\ref{sec:LeasatSquare}, with the 
+model $f(t_2)\!=\!A\exp(-t_2/\tau_\mathrm{exp})$. Then, only the range of $G(0,t_2)$ exponentially behaving contributes to the fits, obtained by half logarithmic plots. 
+Rearranging the resulting model, which is set to $0.01$ leads to 
+\begin{align*}
+    \tau          &= \tau_\mathrm{exp}\ln(100A) \\
+    \sigma^2_\tau &= \ln(100A)^2\sigma_{\tau_\mathrm{exp}}^2+\left(\frac{\tau_\mathrm{exp}}{A}\right)^2\sigma_A^2
+                                                            +\frac{\tau_\mathrm{exp}\ln(100A)}{A}(\sigma^2_{A,\tau_\mathrm{exp}}+\sigma^2_{\tau_\mathrm{exp},A}),
+\end{align*}
+with the model parameters $A$, $\tau_\mathrm{exp}$. The single indexed $\sigma^2$ denotes the variances and the double indexed ones the covariances. 
+The variance of $\tau$ is obtained by the error propagation Formula~\eqref{align:Error_propagation}. The received relaxation times are shown in Figure~\ref{fig:relax}.
+The approach is intended by avoiding storing large amounts of autocorrelation function values until the value $0.01$ is reached, which is nontrivial, especially 
+for low temperatures. Usually, the number of necessary data is smaller for receiving reliable fits.
+
+\begin{figure}[!h]
+  \includegraphics{relax.eps}
+  \caption{The relaxation times of the corresponding ordering premise as function of the temperature is shown for $L\!=\!128$ and the used simulation
+           algorithms.}
+  \label{fig:relax}
+\end{figure}
+
+\newpage
+
+
+
+

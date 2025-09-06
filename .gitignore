@@ -11,7 +11,13 @@ data/raw/equi/*
 data/snap/*
 !data/snap/.gitkeep
 
+latex/auxiliary
+latex/plots/*.eps
+latex/plots/*.pdf
+latex/svg-inkscape
+
 literature
+anmeldung.pdf
 
 # Output files 
 *.png

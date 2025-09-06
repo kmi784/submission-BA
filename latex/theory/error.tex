@@ -1,0 +1,162 @@
+
+
+\section{Error estimation}
+\label{sec:error}
+
+The idea of the simulation method described in Section~\ref{sec:MCsimulations} is to approximate the theoretical expectation value
+$\langle \mathcal{O} \rangle$ of a microstate dependent observable $\mathcal{O}(\bm{\sigma})$ through Equation~\eqref{align:MCidea}. This estimate
+depends on the number of measurements $M$ and the explicit outcomes of the stochastic experiments, and hence the estimator $\hat{\mathcal{O}}$ carries an error 
+and fluctuates around the exact expectation value. One has to chose $M$ properly such that the expense of simulation time and the statistical error of the estimate 
+are in balance. A 
+quantity to evaluate the deviation between $\hat{\mathcal{O}}$ and $\langle \mathcal{O} \rangle$ is the variance 
+\begin{align*}
+    \sigma_{\hat{\mathcal{O}}}^2 = \langle \hat{\mathcal{O}}^2\rangle-\langle \hat{\mathcal{O}} \rangle^2.
+\end{align*}
+In the following, the term "error" refers to the square root of the variance also known as one-sigma-error. If all requirements of
+the Central Limit Theorem~\cite[p.246]{Behrends2013} are sufficiently fulfilled, roughly $68\%$ of the independently estimated values will satisfy
+$\hat{\mathcal{O}}\!\in\![\langle \hat{\mathcal{O}} \rangle\!-\!\sigma_{\hat{\mathcal{O}}},\langle \hat{\mathcal{O}} \rangle\!+\!\sigma_{\hat{\mathcal{O}}}]$.
+The expression of the variance can be rewritten using Equation~\eqref{align:MCidea}
+\begin{align*}
+    \sigma_{\hat{\mathcal{O}}}^2 %&= \left\langle \frac{1}{M^2}\sum_{k,l=1}^M\mathcal{O}(\bm{\sigma}_k)\mathcal{O}(\bm{\sigma}_l)  \right\rangle 
+                                 %   - \left\langle \frac{1}{M}\sum_{k=1}^M\mathcal{O}(\bm{\sigma}_k) \right\rangle\left\langle \frac{1}{M}\sum_{l=1}^M\mathcal{O}(\bm{\sigma}_k) \right\rangle\\
+                                 &= \frac{1}{M^2}\sum_{k,l=1}^M \langle \mathcal{O}(\bm{\sigma}_k)\mathcal{O}(\bm{\sigma}_l) \rangle 
+                                    - \langle \mathcal{O}(\bm{\sigma}_k) \rangle\langle \mathcal{O}(\bm{\sigma}_l) \rangle\\
+                                 &= \frac{1}{M^2}\!\sum_{k=1}^M\!\left( \langle \mathcal{O}(\bm{\sigma}_k)^2 \rangle \!\!-\!\! \langle \mathcal{O}(\bm{\sigma}_k) \rangle^2 \right)
+                                    \!+\! \frac{1}{M^2}\!\sum_{k\neq l}^M \!\left( \langle \mathcal{O}(\bm{\sigma}_k)\mathcal{O}(\bm{\sigma}_l) \rangle \!\!-\!\! \langle \mathcal{O}(\bm{\sigma}_k) \rangle\langle \mathcal{O}(\bm{\sigma}_l) \rangle \right).
+\end{align*}
+The off-diagonal sum leads to an important quantity, namely the autocorrelation function defined as
+\begin{align*}
+    A_\mathcal{O}(k,l)=\frac{\langle \mathcal{O}(\bm{\sigma}_k)\mathcal{O}(\bm{\sigma}_l) \rangle - \langle \mathcal{O}(\bm{\sigma}_k) \rangle\langle \mathcal{O}(\bm{\sigma}_l) \rangle}
+                            {\langle \mathcal{O}(\bm{\sigma}_k)^2\rangle - \langle \mathcal{O}(\bm{\sigma}_k) \rangle^2}.
+\end{align*}
+The autocorrelation function serves as a benchmark of how much the $k^\text{th}$ measurement of the observable $\mathcal{O}$ is correlated to the $l^\text{th}$, 
+$1$ for maximally correlated and $0$ for uncorrelated. If the underlying probability distribution of the measurements is in equilibrium, and thus the observables 
+$\mathcal{O}(\bm{\sigma}_k)$ and $\mathcal{O}(\bm{\sigma}_l)$ are distributed according to the same probability distribution, translation invariance will hold 
+for the measurement indices within expectation values, i.e., for our purposes 
+\begin{align*}
+    \langle \mathcal{O}(\bm{\sigma}_k) \mathcal{O}(\bm{\sigma}_{k+(l-k)}) \rangle \!=\! \langle \mathcal{O}(\bm{\sigma}_{\tilde{k}}) \mathcal{O}(\bm{\sigma}_{\tilde{k}+(l-k)}) \rangle \  
+    \text{ and } \  \langle \mathcal{O}(\bm{\sigma}_k) \rangle \!=\! \langle \mathcal{O}(\bm{\sigma}_{\tilde{k}}) \rangle \  \  \forall\tilde{k}.
+\end{align*}
+With this assumption the autocorrelation function is only a function of the measurement indices delay $l\!-\!k$ and obtaining the simplified
+expression of the variance
+\begin{align*}
+    \sigma_{\hat{\mathcal{O}}}^2 &= \frac{\sigma^2_\mathcal{O}}{M} 
+                                   +\frac{2}{M^2}\sum_{k=1}^M\sum_{l=k+1}^M\langle \mathcal{O}(\bm{\sigma}_k) \mathcal{O}(\bm{\sigma}_{k+(l-k)}) \rangle-\langle \mathcal{O}(\bm{\sigma}_k) \rangle\langle \mathcal{O}(\bm{\sigma}_{k+(l-k)}) \rangle\\
+                                 &= \frac{\sigma^2_\mathcal{O}}{M} 
+                                   +\frac{2\sigma^2_\mathcal{O}}{M^2}\sum_{k=1}^M\sum_{l=k+1}^{M}A_\mathcal{O}(l\!-\!k)
+                                  = \frac{\sigma^2_\mathcal{O}}{M} 
+                                   +\frac{2\sigma^2_\mathcal{O}}{M^2}\sum_{l\!-\!k=1}^M(M-(l\!-\!k))\cdot A_\mathcal{O}(l\!-\!k)\\
+                                 &=\frac{\sigma^2_\mathcal{O}}{M}\left(1+2\sum_{l\!-\!k=1}^MA_\mathcal{O}(l\!-\!k)\left(1-\frac{l\!-\!k}{M}\right)\right),
+\end{align*}
+with $\sigma^2_\mathcal{O}=\langle \mathcal{O}(\bm{\sigma}_k)^2 \rangle\!-\!\langle \mathcal{O}(\bm{\sigma}_k) \rangle^2$, which is independent of the index $k$.
+To resolve the double sum to a simple sum, one has to apply the factor $M-(l\!-\!k)$ because for a fixed delay $l\!-\!k$, the corresponding value of the autocorrelation
+function appears $M-(l\!-\!k)$ times in the double sum. This leads to the important quantity of integrated autocorrelation time
+\begin{align}
+    \tau_{\mathcal{O},\mathrm{int}}=\frac{1}{2}\!+\!\sum_{l\!-\!k=1}^MA_\mathcal{O}(l\!-\!k)\left(1-\frac{l\!-\!k}{M}\right).  
+    \label{align:autoTimeInt}
+\end{align}
+The interpretation of the integrated autocorrelation time can best be explained by the expression of $\sigma_{\hat{\mathcal{O}}}^2$ above, rewritten in 
+terms of the autocorrelation time $\sigma_{\hat{\mathcal{O}}}^2=2\tau_{\mathcal{O},\mathrm{int}}\sigma_{\mathcal{O}}^2/M$ in comparison to the uncorrelated case 
+$\sigma_{\hat{\mathcal{O}}}^2=\sigma_{\mathcal{O}}^2/M$ provided by the Central Limit Theorem~\cite[p.246]{Behrends2013}. Therefore, the number of 
+uncorrelated measurements is $M$ for uncorrelated data and $M/2\tau_{\mathcal{O},\mathrm{int}}$ for
+correlated data, implying only every $(2\tau_{\mathcal{O},\mathrm{int}})^\text{th}$ measurement is uncorrelated. The data produced by MCMC methods is correlated, 
+and hence one has to deal with autocorrelation times to estimate reliable statistical errors.~\cite{Janke2012}
+
+The introduced autocorrelation function $A_\mathcal{O}(k,l)$ has a significant behavior for large delays $l\!-\!k$, which can be obtained by the 
+proportional relation 
+\begin{align}
+    \frac{\langle \mathcal{O}(\bm{\sigma}_k)\mathcal{O}(\bm{\sigma}_l) \rangle - \langle \mathcal{O}(\bm{\sigma}_k) \rangle\langle \mathcal{O}(\bm{\sigma}_l) \rangle}
+                            {\langle \mathcal{O}(\bm{\sigma}_k)^2\rangle - \langle \mathcal{O}(\bm{\sigma}_k) \rangle^2}
+    \propto\exp\left(-\frac{l-k}{\tau_{\mathcal{O},\mathrm{exp}}}\right),
+    \label{align:autoTimeExp}
+\end{align}
+defining the exponential autocorrelation time $\tau_{\mathcal{O},\mathrm{exp}}$. For a perfect exponential decay and a transition into the continuum, 
+these autocorrelation times coincide because the expression of $\tau_{\mathcal{O},\mathrm{int}}$ corresponds to an approximation of the integral
+\begin{align*} 
+    \int_{0}^\infty A_\mathcal{O}(t)\mathrm{d}t=\int_{0}^\infty \exp\left(-\frac{t}{\tau_{\mathcal{O},\mathrm{exp}}}\right)\mathrm{d}t
+                                               =\tau_{\mathcal{O},\mathrm{exp}}.
+\end{align*}
+
+
+
+
+
+
+
+
+\subsection*{Propagation of errors}
+
+During an analysis, one is interested in quantities $f$ depending on some observables $\mathcal{O}^{(i)}$ for $i\!\in\!\{1,...,K\}$. Additionally, 
+the estimates $\hat{\mathcal{O}}^{(i)}$ and corresponding variances $\sigma^2_i$ are already known. The variance $\sigma^2_f$ can then be 
+obtained through a propagation of the variances $\sigma^2_i$. Firstly let's consider
+the linear terms of the Taylor-expansion of $f$ at $(\hat{\mathcal{O}}^{(1)},...,\hat{\mathcal{O}}^{(K)})$ 
+\begin{align*}
+    f(\mathcal{O}^{(1)},...,\mathcal{O}^{(K)})-f(\hat{\mathcal{O}}^{(1)},...,\hat{\mathcal{O}}^{(K)})
+    \approx\sum_{i=1}^K\partial_if\left(\mathcal{O}^{(i)}\!-\!\hat{\mathcal{O}}^{(i)}\right),
+\end{align*}
+where $\partial_if$ denotes the partial derivative with respect to $\mathcal{O}^{(i)}$ at $\hat{\mathcal{O}}^{(i)}$. But this approximation holds only for 
+deviation $\mathcal{O}^{(i)}\!-\!\hat{\mathcal{O}}^{(i)}$ sufficiently small. To close the connection between these 
+deviations and the variances $\sigma^2_i$, consider the infinite statistics limit 
+\begin{align*}
+    \sigma^2_f &= \lim_{M\to\infty}\left(\frac{1}{M}\sum_{j=1}^M\left(f(\mathcal{O}^{(1)}\!(\bm{\sigma}_j),...,\mathcal{O}^{(K)}\!(\bm{\sigma}_j))-f(\hat{\mathcal{O}}^{(1)},...,\hat{\mathcal{O}}^{(K)})\right)^2\right)\\
+               &= \lim_{M\to\infty}\left(\frac{1}{M}\sum_{j=1}^M\left(\sum_{i=1}^K\partial_if\left(\mathcal{O}^{(i)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(i)}\right)\right)^2\right)\\
+               &= \sum_{i=1}^K(\partial_if)^2\lim_{M\to\infty}\left(\frac{1}{M}\sum_{j=1}^M\left(\mathcal{O}^{(i)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(i)}\right)^2\right)\\
+               &\  \  \  +\sum_{i\neq k}^K\partial_if\partial_kf\lim_{M\to\infty}\left(\frac{1}{M}\sum_{j=1}^M\left(\mathcal{O}^{(i)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(i)}\right)\left(\mathcal{O}^{(k)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(k)}\right)\right).
+\end{align*}
+Using the infinite statistics limit in the opposite direction one gets the famous error-propagation
+formula
+\begin{align}
+    \sqrt{\sigma^2_f}=\left(\sum_{i=1}^K(\partial_if)^2\sigma^2_i+\sum_{i\neq k}^K\partial_if\partial_kf\sigma^2_{ik}\right)^{1/2},
+    \label{align:Error_propagation}
+\end{align}
+with $\sigma^2_{ik}\!=\!\lim_{M\to\infty}(\frac{1}{M}\sum_{j=1}^M(\mathcal{O}^{(i)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(i)})(\mathcal{O}^{(k)}\!(\bm{\sigma}_j)\!-\!\hat{\mathcal{O}}^{(k)}))$ denoted
+as covariance. The usage of this formula demands errors small enough of the estimated means $\hat{\mathcal{O}}^{(i)}$. The off-diagonal sum can be omitted for uncorrelated observables $\mathcal{O}^{(i)}$,
+but this is not always the case.~\cite[p.39]{Bevington2003}
+
+
+
+
+
+\subsection*{Jackknife analysis}
+
+In general, it is cumbersome to determine the autocorrelation function and the corresponding autocorrelation time or to obtain proper error estimations of 
+observables resulting from non-linear functions of the measured observables through error propagation. A powerful tool to overcome these problems is 
+Jackknife analysis. For explanation, let $\mathcal{O}(\bm{\sigma}_k)$ for $k\!\in\!\{1,...,M\}$ be the received measurements. Dividing this series into 
+$M_J$ blocks of length $m_J$ such that $M\!=\!m_J\!\cdot\!M_J$ applies, then the $j^\text{th}$ Jackknife block for $j\!\in\!\{1,...,M_J\}$ and its mean 
+are defined by 
+\begin{align*}
+    \big{\{}\mathcal{O}(\bm{\sigma}_1),\mathcal{O}(\bm{\sigma}_2),...,\mathcal{O}(\bm{\sigma}_M)\big{\}}
+    \setminus
+    \big{\{}\mathcal{O}(\bm{\sigma}_{m_J(j\!-\!1)\!+\!1}),\mathcal{O}(\bm{\sigma}_{m_J(j\!-\!1)\!+\!2}),...,\mathcal{O}(\bm{\sigma}_{m_Jj})\big{\}},
+\end{align*}
+\begin{align*}
+    \mathcal{O}^J_j=\frac{1}{M\!-\!m_J}\left( \sum_{k=1}^M\mathcal{O}(\bm{\sigma}_k)-\sum_{k=1}^{m_J}\mathcal{O}(\bm{\sigma}_{m_J(j\!-\!1)\!+\!k}) \right).
+\end{align*}
+The mean value of the Jackknife blocks should coincide with the mean value of the original series of the measurements as the following calculation shows.
+\begin{align*}
+    \hat{\mathcal{O}}^J &= \frac{1}{M_J}\sum_{j=1}^{M_J}\mathcal{O}^J_j
+                         = \frac{1}{M_J(M\!-\!m_J)}\left(M_J\sum_{k=1}^M\mathcal{O}(\bm{\sigma}_k) 
+                           - \sum_{j=1}^{M_J}\sum_{k=1}^{m_J}\mathcal{O}(\bm{\sigma}_{m_J(j\!-\!1)\!+\!k}) \right) \\
+                        &= \frac{1}{m_JM_J(M_J\!-\!1)}(M_J\!-\!1)\sum_{k=1}^M\mathcal{O}(\bm{\sigma}_k) 
+                         = \frac{1}{M}\sum_{k=1}^M\mathcal{O}(\bm{\sigma}_k)
+                         =\hat{\mathcal{O}}
+\end{align*}
+The variance of the estimator $\hat{\mathcal{O}}$ can be computed by
+\begin{align}
+    \sigma^2_{\hat{\mathcal{O}}}=\frac{M_J\!-\!1}{M_J}\sum_{j=1}^{M_J}\left(\mathcal{O}^J_j-\hat{\mathcal{O}}\right)^2
+    \label{align:Jackknife}
+\end{align}
+To see the validity of Equation~\eqref{align:Jackknife}, perform the following calculation
+\begin{align*}
+    \frac{M_J}{M_J\!-\!1}\sigma^2_{\hat{\mathcal{O}}} &= \sum_{j=1}^{M_J}\left(\frac{M}{M\!-\!m_J}\hat{\mathcal{O}}
+                                                                              -\frac{m_J}{M\!-\!m_J}\hat{\mathcal{O}}^\text{Block}_j
+                                                                              -\hat{\mathcal{O}}\right)^2\\
+                                                      &= \frac{m_J^2}{(M\!-\!m_J)^2}\sum_{j=1}^{M_J}\left(\hat{\mathcal{O}}^\text{Block}_j\!-\!\hat{\mathcal{O}}\right)^2
+                                                       = \frac{1}{(M_J\!-\!1)^2}\sum_{j=1}^{M_J}\left(\hat{\mathcal{O}}^\text{Block}_j\!-\!\hat{\mathcal{O}}\right)^2,
+\end{align*}
+where $\hat{\mathcal{O}}^\text{Block}_j\!=\!\frac{1}{m_J}\sum_{k=1}^{m_J}\mathcal{O}(\bm{\sigma}_{m_J(j\!-\!1)\!+\!k})$ 
+were introduced for simplicity. Multiplying the above equation with  $M_J\!-\!1$, one obtains on the right-hand side the unbiased variance estimator 
+of the block means $\sigma^2_\text{Block}$. Furthermore, this results in the equation 
+$\sigma^2_{\hat{\mathcal{O}}}=\sigma^2_\text{Block}/M_J$, which becomes true if the requirements of the Central Limit Theorem~\cite[p.246]{Behrends2013} 
+are satisfied. The requirement of independently and identically distributed random variables demands uncorrelated
+$\hat{\mathcal{O}}^\text{Block}_j$, therefore one has to choose $m_J\gg\tau_\mathcal{O}$ such that Equation~\eqref{align:Jackknife} turns valid.~\cite{Janke2012} 

@@ -1,0 +1,46 @@
+
+\section{Least square approximation}
+\label{sec:LeasatSquare}
+
+Least square approximation is a tool useful for data analysis. To give an explanation, let $(x_i,y_i)$ for $i\!\in\!\{1,...,M\}$
+be a set of data points where the values $y_i$ have a variance $\sigma_i^2$, which should be fitted to a model $f_m(x)$ with $m$ 
+parameters yet to be determined. The idea is to maximize the probability $W_m$ such that a given model $f_m$ produces the data points 
+$(x_i,y_i)$. Under the Gaussian assumption, this probability is  given by 
+\begin{align*}
+    W_m=\prod_{i=1}^M\left(\frac{1}{\sqrt{2\pi\sigma_i^2}}\right)\cdot
+      \exp\left(-\frac{1}{2}\sum_{i=1}^M\frac{(y_i-f_m(x_i))^2}{\sigma_i^2}\right),
+\end{align*}
+where the weighted sum in the exponent is also known as $\chi^2$. Therefore, the $m$ parameters must be chosen such that
+the value of $\chi^2$ is minimal. For linear models the minimum in the parameter space can be determined analytically but for 
+non-linear models there are only methods for approximating the parameters minimizing $\chi^2$. Another important
+quantity is the statistical degree of freedom $\mathrm{dof}$ of the estimated value of $\chi^2$, which equals the difference of the 
+number of random variables $M$ and the number of determined means $m$, i.e., $\mathrm{dof}\!=\!M\!-\!m$.~\cite[p.103]{Bevington2003}
+
+The determined model parameters are obviously correlated. Thus, some attention is necessary for the error estimation of observables 
+resulting from these parameters. Using the error-propagation Formula~\eqref{align:Error_propagation}, the off-diagonal sum has be
+taken into account to receive a reliable error estimation. 
+
+\subsection*{Quality of the Least square approximation}
+
+The above consideration does not deliver an answer to which model represents the observed data better. To answer this question, let's 
+consider the variance of the fit
+\begin{align*}
+    \sigma_\mathrm{fit}^2=\frac{1}{M\!-\!m}\sum_{i=1}^M\frac{1/\sigma_i^2}{1/M\sum_{i=1}^M1/\sigma_i^2}\!\cdot\!(y_i\!-\!f_m(x_i))^2
+\end{align*}
+where the first factor in the sum weights the deviation of the data point to the model corresponding to the variance of the data point. This
+weighting factor can be rewritten as 
+\begin{align*}
+    \frac{1}{\sigma_i^2}\frac{1/M\cdot M}{1/M\sum_{i=1}^M1/\sigma_i^2}
+    =\frac{1}{\sigma_i^2}\frac{1}{M}\sum_{i=1}^M\frac{1/\sigma_i^2}{1/M\sum_{i=1}^M1/\sigma_i^2}\!\cdot\!\sigma_i^2
+    =\frac{\hat{\sigma}^2}{\sigma_i^2}
+\end{align*}
+where $\hat{\sigma}^2$ denotes the weighted average of the variance of the data points. Inserting the above identity into the
+variance of the fit gives the following expression of $\chi^2$-value
+\begin{align*}
+    \chi^2=\mathrm{dof}\frac{\sigma_\mathrm{fit}^2}{\hat{\sigma}^2}.
+\end{align*}
+For this equation one can discuss three extremal cases. Firstly, $\chi^2\ll\mathrm{dof}$, then $\sigma_\mathrm{fit}^2\ll\hat{\sigma}^2$ implying 
+that model parameters can always be found such that the model fits with the data points. This is also known as "overfitting". Secondly, $\chi^2\gg\mathrm{dof}$,
+thus $\sigma_\mathrm{fit}^2\gg\hat{\sigma}^2$, i.e., the model does not fit with the observed
+data points and the third one, $\chi^2\approx\mathrm{dof}$, implies that the variance of the fit and the data points are roughly the same. Therefore, 
+a $\chi^2$-value of statistical degree of freedom should be the aim.~\cite[p.194]{Bevington2003} 

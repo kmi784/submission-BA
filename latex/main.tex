@@ -1,0 +1,179 @@
+
+\documentclass[openany]{report}
+
+
+
+%*************** Basic ***************
+\usepackage[english]{babel}  % Sprache Labels
+\usepackage[
+  colorlinks = true, 
+  linkcolor = {blue!60!black}, 
+  citecolor = {blue!60!black},
+  urlcolor = {blue!50!black}
+]{hyperref}        
+\usepackage{titlesec}
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+
+
+
+%*************** Importe ***************
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{svg}
+\graphicspath{{.}{plots/}{images/}} % Ordner in den gesucht werden soll
+\usepackage{makecell}
+
+
+
+
+%*************** Literatur ***************
+\usepackage{natbib}            % Naturwissenschaftliches BibTex                
+\usepackage{placeins}          % Bibliographie FloatBarrier
+\setcitestyle{numbers,square}  % Referenz-style
+\bibliographystyle{apsrev4-2}  % Physik-paper-style
+
+
+
+%*************** Math ***************
+\usepackage{amsmath}  % align-Umgebung
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
+\usepackage{amssymb}  % \mathbb{N} usw.
+\usepackage{bm}       % Vektoren
+
+
+
+%*************** TikZ ***************
+\usepackage{tikz}
+\usetikzlibrary{matrix, fit, backgrounds}
+
+\newcommand{\upF}{
+  \tikz[baseline]{
+    \fill[draw] (0,0) -- ++(0,1.4ex) ++(-0.35ex,0) -- ++(0.7ex,0) -- ++(-0.35ex,0.7ex) -- ++(-0.35ex,-0.7ex) -- ++(0.35ex,0)
+  }
+}
+
+\newcommand{\doF}{
+  \tikz[baseline]{
+    \fill[draw] (0,0) -- ++(-0.35ex,0.7ex) -- ++(0.7ex,0) -- (0,0) -- ++(-0.35ex,0.7ex) -- ++(0.35ex,0) -- ++(0,1.4ex)
+  }
+}
+
+\newcommand{\upE}{
+  \tikz[baseline]{
+    \draw (0,0) -- ++(0,1.4ex) ++(-0.35ex,0) -- ++(0.7ex,0) -- ++(-0.35ex,0.7ex) -- ++(-0.35ex,-0.7ex) -- ++(0.35ex,0)
+  }
+}
+
+\newcommand{\doE}{
+  \tikz[baseline]{
+    \draw (0,0) -- ++(-0.35ex,0.7ex) -- ++(0.7ex,0) -- (0,0) -- ++(-0.35ex,0.7ex) -- ++(0.35ex,0) -- ++(0,1.4ex)
+  }
+}
+
+
+
+
+%******************** Title ********************
+\title{
+        {\includesvg[scale=1.5]{images/logo.svg}} \\
+        \vspace{1cm}
+        {\large Bachelor Thesis} \\ 
+        {Ising model on a square lattice with competing nearest and next-nearest neighbor interactions} \\
+        {\large  Institut für Theoretische Physik Leipzig} \\
+        \vspace{7cm} 
+        \begin{table}[b]
+          \begin{tabular}{ll}
+            \multicolumn{2}{l}{\footnotesize{Eingereicht am 17. September 2024}} \\
+            \multicolumn{2}{l}{} \\
+            1. Gutachter: & Prof. Dr. Wolfhard Janke \\
+            2. Gutachter: & Denis Gessert \\
+          \end{tabular}
+        \end{table}
+      } 
+\author{Kaspar Mitte \\ Matrikelnummer: 3704209}
+\date{}
+%************************************************
+
+
+
+%**********************************************************************
+\begin{document} %*****************************************************
+\pagenumbering{gobble} %***********************************************
+\maketitle %***********************************************************
+%**********************************************************************
+
+
+
+\newpage
+
+\subsection*{Eigenständigkeitserklärung}
+Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig eigenhändig sowie ohne unerlaubte fremde Hilfe und ausschließlich 
+unter Verwendung der aufgeführten Quellen und Hilfsmittel angefertigt habe.\\
+\\
+Leipzig, den 17.09.2024 \\
+\begin{tabular}{m{4cm}}
+  \\
+  \\
+  \\
+  \hline
+  \footnotesize{Kaspar Mitte}
+\end{tabular}
+
+\newpage
+
+\begin{abstract}\input{formal/abstract.tex}\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+
+  \input{formal/intro.tex}
+
+\chapter{System under consideration}
+
+  \input{theory/system.tex}
+
+  \input{theory/statistical.tex}
+
+\chapter{Methods}
+
+  \input{theory/simulation.tex}
+
+  \input{theory/error.tex}
+
+  \input{theory/fits.tex}
+
+  \input{theory/wham.tex}
+
+\chapter{Results}
+
+  \input{results/results.tex}
+
+  \input{results/discussion.tex}
+
+\chapter{Conclusion}
+
+  \input{formal/summary.tex}
+
+\newpage
+
+\appendix
+
+  %\input{results/appendix.tex}
+
+
+
+
+%************************************************************************
+\FloatBarrier %**********************************************************
+\bibliography{/Users/kaspar/documents/Bachelorthesis/Referenzen.bib} %***
+\end{document} %*********************************************************
+%************************************************************************

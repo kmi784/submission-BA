@@ -1,0 +1,283 @@
+
+\chapter{Derivatives of the free energy}
+\label{app:kalz}
+
+\section{Data generation details}
+
+This section gives a compiling and execution instruction to reproduce the numerical work of the experiment in Section \ref{sec:kalz_experiment}. 
+Firstly, the submission folder
+\verb|submission/| contains four subfolders. The necessary codes are in \verb|generateK/| and \verb|analyzeK/| for the mentioned experiment. All 
+\verb|c++|-codes are compiled with the C++20 standard (\verb|-std=c++20|) and an optimization level two (\verb|-O2|).
+
+\subsection*{Simulation code}
+
+The folder \verb|generateK/| includes the files \verb|main.cpp| with the main-function, \verb|system.hpp| with all used declarations and \verb|system.cpp|
+contains the corresponding definitions. Before compiling, the lines 17-20 of the header file may have to modified for the desired purpose. In line 17 the object-like macro 
+set to \verb|true| correspond to a compiling with the line spin update algorithm and to \verb|false| with the single spin update. The integer in 
+line 18 correspond to the lattice length $L$. The coupling constants $J_1$ and $J_2$ are evaluated by the floating point numbers in lines 19 and 20.
+A set of six command line arguments must be passed to the resulting executable.
+\begin{itemize}
+  \item[1.] PRNG seed as unsigned integer 
+  \item[2.] simulation temperature $T$ as floating point number
+  \item[3.] initial state $I$ as character \verb|F| correspond to the ferromagnetic initial state, \verb|H| to the horizontal striped one, \verb|V| to the
+             vertical striped one and \verb|U| or any other character to the uniformly distributed one
+  \item[4.] number of equilibration sweeps $N_\mathrm{equi}$
+  \item[5.] number of sweeps for data collection  $N_\mathrm{meas}$
+  \item[6.] number of sweeps within a subtracting block for the Jackknife method $m_J$
+\end{itemize}
+These arguments are chosen according to the Tables \ref{table:experiment_kalz1} and \ref{table:experiment_kalz2} for the considered lattice lengths. The compiled 
+executable generates the folder
+\verb|L_-_/| ($1^\text{st}$ gap correspond to $L$ and $2^\text{nd}$ one to the initial state) in the current working directory, if the folder does not already exist. In this folder a 
+subfolder is generated corresponding to the chosen $T$. The entire energy histogram with the magnetization-lists (\verb|entire.txt|) is stored
+in this folder as well as the $N_\mathrm{meas}/m_J$ block histograms (\verb|block_.txt|). Furthermore, the final PRNG engine state, the final lattice state, the final values 
+of $E$, $M$, $M^2$,$M_s$, $M^2_s$ and the PRNG seed, $N_\mathrm{equi}$, $N_\mathrm{meas}$, $m_J$ is written in \verb|save.txt| for a possible continuing of
+the simulation.  
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{|lllll|}
+    \hline
+    $L$  & $I$ & $N_\mathrm{equi}$ & $N_\mathrm{simu}$ & $N_\mathrm{jack}$ \\ 
+    \hline
+    $30$ & \verb|U| & $2.0\cdot10^{7}$ & $5.0\cdot10^{7}$ & $5.0\cdot10^{5}$\\
+    $40$ & \verb|U| & $2.0\cdot10^{7}$ & $5.0\cdot10^{7}$ & $5.0\cdot10^{5}$\\
+    $50$ & \verb|U| & $2.0\cdot10^{7}$ & $5.0\cdot10^{7}$ & $5.0\cdot10^{5}$\\
+    $60$ & \verb|U| & $2.0\cdot10^{7}$ & $5.0\cdot10^{7}$ & $5.0\cdot10^{5}$\\
+    $70$ & \verb|U| & $5.0\cdot10^{7}$ & $1.0\cdot10^{8}$ & $1.0\cdot10^{6}$\\
+    $80$ & \verb|U| & $5.0\cdot10^{7}$ & $1.0\cdot10^{8}$ & $1.0\cdot10^{6}$\\
+    $90$ & \verb|U| & $5.0\cdot10^{7}$ & $1.0\cdot10^{8}$ & $1.0\cdot10^{6}$\\
+    $100$ & \verb|U| & $1.0\cdot10^{8}$ & $1.5\cdot10^{8}$ & $1.5\cdot10^{6}$\\
+    $110$ & \verb|U| & $1.0\cdot10^{8}$ & $1.5\cdot10^{8}$ & $1.5\cdot10^{6}$\\
+    $120$ & \verb|U| & $1.0\cdot10^{8}$ & $1.5\cdot10^{8}$ & $1.5\cdot10^{6}$\\
+    \hline
+  \end{tabular}
+  \caption{This table shows all simulation parameters except for the temperatures and the PRNG seeds.}
+  \label{table:experiment_kalz1}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+    \begin{tabular}{|ll|}
+      \hline
+      $L$ & $(T,\text{seed})$ \\ 
+      \hline
+      $30$ & \makecell{$(0.37,9481)$,$(0.386,8879)$,$(0.402,1876)$,$(0.418,8270)$,\\$(0.434,1628)$,$(0.45,9600)$,$(0.466,5181)$,$(0.482,8255)$,\\$(0.498,7964)$,$(0.514,7966)$,$(0.53,8799)$} \\
+      \hline
+      $40$ & \makecell{$(0.35,3101)$,$(0.36,6454)$,$(0.37,2636)$,$(0.38,3449)$,\\$(0.39,4370)$,$(0.4,3573)$,$(0.41,2464)$,$(0.42,9733)$,\\$(0.43,6951)$,$(0.44,9248)$,$(0.45,404)$} \\
+      \hline
+      $50$ & \makecell{$(0.34,1262)$,$(0.35,3959)$,$(0.36,323)$,$(0.37,7862)$,\\$(0.38,3965)$,$(0.39,9907)$,$(0.4,4951)$,$(0.41,353)$,\\$(0.42,4764)$,$(0.43,6756)$,$(0.44,5063)$} \\
+      \hline
+      $60$ & \makecell{$(0.33,1304)$,$(0.34,9748)$,$(0.35,666)$,$(0.36,7767)$,\\$(0.37,6541)$,$(0.38,6140)$,$(0.39,4617)$,$(0.4,848)$,\\$(0.41,8426)$,$(0.42,8597)$,$(0.43,5430)$} \\
+      \hline
+      $70$ & \makecell{$(0.32,9334)$,$(0.33,5248)$,$(0.34,1710)$,$(0.35,5503)$,\\$(0.36,5083)$,$(0.37,4443)$,$(0.38,8094)$,$(0.39,8390)$,\\$(0.4,3062)$,$(0.41,4150)$,$(0.42,7934)$} \\
+      \hline
+      $80$ & \makecell{$(0.32,5660)$,$(0.326,478)$,$(0.332,286)$,$(0.338,5366)$,\\$(0.344,3288)$,$(0.35,4412)$,$(0.356,4696)$,$(0.362,4554)$,\\$(0.368,7866)$,$(0.374,4665)$,$(0.38,2323)$} \\
+      \hline
+      $90$ & \makecell{$(0.32,849)$,$(0.325,120)$,$(0.33,4593)$,$(0.335,8940)$,\\$(0.34,80)$,$(0.345,8962)$,$(0.35,4891)$,$(0.355,3008)$,\\$(0.36,115)$,$(0.365,4401)$,$(0.37,8335)$} \\
+      \hline
+      $100$ & \makecell{$(0.31,7564)$,$(0.315,545)$,$(0.32,7460)$,$(0.325,6423)$,\\$(0.33,819)$,$(0.335,6148)$,$(0.34,2233)$,$(0.345,7)$,\\$(0.35,9428)$,$(0.355,7516)$,$(0.36,4740)$} \\
+      \hline
+      $110$ & \makecell{$(0.31,9200)$,$(0.314,9894)$,$(0.319,5784)$,$(0.323,6224)$,\\$(0.328,3936)$,$(0.332,4971)$,$(0.337,6983)$,$(0.341,672)$,\\$(0.346,6819)$,$(0.35,6636)$} \\
+      \hline
+      $120$ & \makecell{$(0.3,7976)$,$(0.304,2828)$,$(0.309,9951)$,$(0.313,3972)$,\\$(0.318,2650)$,$(0.322,620)$,$(0.327,2653)$,$(0.331,3733)$,\\$(0.336,3299)$,$(0.34,1100)$} \\
+      \hline
+    \end{tabular}
+  \caption{The chosen temperatures and PRNG seeds are depicted for the considered lattice length.}
+  \label{table:experiment_kalz2}
+\end{table}
+
+
+
+
+\subsection*{Data analysis codes}
+
+All codes for the data analysis are contained in the folder \verb|analyzeK/| in \verb|submission/|. The executable of \verb|mean.cpp| needs 
+the following two command line arguments.
+\begin{itemize}
+  \item[1.] relative path from the current working directory to the target folder \verb|L_-_/| and the corresponding name
+  \item[2.] relative path from the current working directory and name of the output \verb|txt|-file
+\end{itemize}
+This executable computes for all temperatures in \verb|L_-_/| the means and errors of the considered observables through the obtained histograms 
+and magnetization lists. Compiling \verb|wham.cpp| results in an executable, generating reweighed data points of the considered 
+observables as a function of $T$ with WHAM. The five command line arguments have to pass for a faultless execution.
+\begin{itemize}
+  \item[1.] relative path from the current working directory to the target folder \verb|L_-_/| and the corresponding name
+  \item[2.] relative path from the current working directory and name of the output \verb|txt|-file
+  \item[3.] the lower temperature boundary $T_\mathrm{min}$ as floating point number of the reweighing range
+  \item[4.] the upper temperature boundary $T_\mathrm{max}$ as floating point number of the reweighing range
+  \item[5.] the number of reweighed data points
+\end{itemize}
+The executable of \verb|peak.cpp| determines for each temperature in \verb|L_-_/| all the Jackknife histograms corresponding
+to their block number. The WHAM procedure is only applied to the specific heat, to obtain the maximum of $c$ for each block number, displaying on
+the console. Furthermore, the lattice length, the mean and the error of the peak location is written in the output file.
+The following set of command line arguments must be passed to the executable.
+\begin{itemize}
+  \item[1.] relative path from the current working directory to the target folder \verb|L_-_/| and the corresponding name
+  \item[2.] relative path from the current working directory and name of the output \verb|txt|-file
+  \item[3.] number of Jackknife blocks
+  \item[4.] the lower temperature boundary $T_\mathrm{min}$ as floating point number of the reweighing range
+  \item[5.] the upper temperature boundary $T_\mathrm{max}$ as floating point number of the reweighing range
+  \item[6.] the number of reweighed data points
+\end{itemize}
+The same output \verb|txt|-file should be chosen while applying this executable on different target folders (different $L$) or repeating the execution 
+of a target, because the corresponding data will be appended or overwritten in this file.
+The reweighing temperature ranges are chosen according to the smallest and largest considered temperatures in \verb|L_-_/|, further the number of the reweighed 
+data points is selected such that a temperature precession of $0.000001$ is achieved. 
+
+
+
+\section{Consistency checks}
+\label{sec:kalz_checks}
+
+The implementations mentioned in the previous two sections are qualitatively verified by the specific heat data for $L\!\in\!\{50,80,100\}$ and 
+$J_2\!\in\!\{-0.3,-0.6\}$. The same procedure depicted in Section \ref{sec:kalz_experiment} is applied for these lattice lengths and NNN-interaction
+constants. For all cases the system is initiated in a high temperature state (\verb|U|) and is equilibrated through 
+$N_\mathrm{equi}\!=\!1.0\cdot10^{6}$ sweeps. Afterward, the entire energy histograms and the corresponding magnetization lists are obtained by 
+$N_\mathrm{meas}\!=\!5.0\cdot10^{6}$ measurements. For the errors, the subtracting block length is chosen $m_J\!=\!5.0\cdot10^{4}$. The temperatures and 
+PRNG seeds are selected according to Table \ref{table:experiment_consi}. The specific heat reference data is extracted from the work of Kalz et al. 
+\cite{Kalz2008}. 
+
+\begin{figure}[!h]
+  \includegraphics{consi_g3.eps}
+  \caption{This plot shows the means and corresponding errors (squares) of the free energy derivatives for $J_2\!=\!-0.3$.
+           The full lines refer to the data obtained by WHAM.}
+  \label{fig:consi_g3}
+\end{figure}
+
+The data of the free energy derivatives for $J_2\!=\!-0.3$ is shown in Figure \ref{fig:consi_g3}. The simulated specific heat data agrees with the reference
+values, some deviations in proximity of the maximum are noticeable for $L\!=\!100$, perhaps originated by $N_\mathrm{meas}$ selected too small. The received peak 
+locations are shown in Table \ref{table:heat_consi}. While lowering the temperature the depicted magnetization per lattice site increases and approaches $1$, 
+emphasizing the ferromagnetic ordering of the low temperature phase for $J_2\!\in\!(-1/2,0]$ mentioned in Section \ref{sec:phase_transitions}. 
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{|lllll|}
+  \hline
+  & \multicolumn{2}{c}{$J_2\!=\!-0.3$} & \multicolumn{2}{c|}{$J_2\!=\!-0.6$} \\
+  $L$ & $T_\mathrm{max}$ & $c_{V,\mathrm{max}}$ & $T_\mathrm{max}$ & $c_{V,\mathrm{max}}$ \\
+  \hline
+  $50$ & $1.26589(93)$ & $2.073(13)$ & $0.97413(18)$ & $9.105(71)$ \\
+  $80$ & $1.2598(45)$ & $2.324(27)$ & $0.97310(21)$ & $14.55(21)$ \\
+  $100$ & $1.26022(77)$ & $2.455(30)$ & $0.97242(26)$ & $18.70(48)$ \\
+  \hline
+  \end{tabular}
+  \caption{The observed peak locations are shown in this table for the considered cases.}
+  \label{table:heat_consi}
+\end{table}
+
+The $J_2\!=\!-0.6$ case is illustrated in Figure \ref{fig:consi_g6}. The values of the specific heat is in a good agreement with the reference data of Kalz et al.
+Furthermore, the peak locations and errors are shown in Table \ref{table:heat_consi} as well. The depicted magnetization behaves according to
+the prediction of a super-antiferromagnetic ordering in the low temperature phase for $J_2\!\in\!(g^*,-1/2)$.  
+
+\begin{figure}[!h]
+  \includegraphics{consi_g6.eps}
+  \caption{The free energy derivatives are shown for $J_2\!=\!-0.6$. Particularly, the magnetic observables
+           are depicted for the super-antiferromagnetic case.}
+  \label{fig:consi_g6}
+\end{figure}
+
+Especially, the vicinity of the specific heat and susceptibility emphasizes phenomenological the kind of the phase transition for the considered 
+$J_2$. The maximums narrow and grow slowly for $J_2\!=\!-0.3$, presuming a power divergence in the thermodynamic limit (Continuous phase transition), 
+compared to the rapidly narrowing and growing of the peaks for $J_2\!=\!-0.6$, which is an evidence of a $\delta$-function like singularity in the 
+thermodynamic limit (Discontinuous phase transition) \cite{Kalz2008}.
+
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{|ll|}
+    \multicolumn{2}{l}{$J_2\!=\!-0.3$}\\
+    \hline
+    $L$ & $(T,\text{seed})$ \\ 
+    \hline
+    $50$ & \makecell{$(1.1,9445)$,$(1.13,3126)$,$(1.16,7097)$,$(1.19,4494)$,\\$(1.22,6778)$,$(1.25,3437)$,$(1.28,3416)$,$(1.31,9142)$,\\$(1.34,1193)$,$(1.37,6181)$,$(1.4,7924)$} \\
+    \hline
+    $80$ & \makecell{$(1.1,5089)$,$(1.13,1936)$,$(1.16,5560)$,$(1.19,7161)$,\\$(1.22,7240)$,$(1.25,7910)$,$(1.28,8669)$,$(1.31,2216)$,\\$(1.34,6146)$,$(1.37,8672)$,$(1.4,7208)$} \\
+    \hline
+    $100$ & \makecell{$(1.1,7987)$,$(1.13,3823)$,$(1.16,9466)$,$(1.19,1387)$,\\$(1.22,4255)$,$(1.25,5861)$,$(1.265,666)$,$(1.28,3554)$,\\$(1.31,736)$,$(1.34,9762)$,$(1.37,3708)$,$(1.4,7651)$} \\
+    \hline
+    \multicolumn{2}{l}{}\\
+    \multicolumn{2}{l}{$J_2\!=\!-0.6$}\\
+    \hline
+    $L$ & $(T,\text{seed})$ \\ 
+    \hline
+    $50$ & \makecell{$(0.94,7880)$,$(0.95,5997)$,$(0.96,7716)$,$(0.97,746)$,\\$(0.98,3313)$,$(0.99,9276)$,$(1.0,247)$,$(1.01,5423)$,\\$(1.02,3587)$,$(1.03,3602)$,$(1.04,2052)$} \\
+    \hline
+    $80$ & \makecell{$(0.94,8849)$,$(0.95,1158)$,$(0.96,7295)$,$(0.97,8570)$,\\$(0.98,5735)$,$(0.99,20)$,$(1.0,2357)$,$(1.01,9621)$,\\$(1.02,4962)$,$(1.03,4354)$,$(1.04,5475)$} \\
+    \hline
+    $100$ & \makecell{$(0.94,6845)$,$(0.95,3487)$,$(0.96,7288)$,$(0.97,3574)$,\\$(0.98,9363)$,$(0.99,4849)$,$(1.0,5107)$,$(1.01,5831)$,\\$(1.02,3572)$,$(1.03,5922)$,$(1.04,5875)$} \\
+    \hline
+  \end{tabular}
+  \caption{This table depicts the PRNG seed for the corresponding temperatures, lattice lengths and NNN-interaction constants.}
+  \label{table:experiment_consi}
+\end{table}
+
+
+
+
+
+
+\chapter{Spin autocorrelation}
+
+\section{Data generation details}
+
+In analogy to the experiments of the free energy derivatives, the compiling and execution instruction are presented in the following for the experiments
+in Section \ref{sec:timmons_experiment}. The used codes are in the subfolders \verb|generateT/| and \verb|analyzeT/| of the submission folder 
+\verb|submission/|. The \verb|c++|-codes are compiled with the flags \verb|-std=c++20| and \verb|-O2|. The necessary \verb|python|-code requires 
+the \verb|sys|, \verb|numpy| and \verb|scipy| modules. 
+
+\subsection*{Simulation code}
+
+The \verb|c++|-files associated with the simulation are located in the folder \verb|generateT/|. The file \verb|main.cpp| contains the main-function and
+the callable (function pointer) for the thread objects. The remaining files \verb|system.hpp| and \verb|system.cpp| includes all declarations and definitions.
+Perhaps, some lines of the header file has to be modified before compiling. The object like macro in line 19 set to \verb|true| enables the line spin update.
+The integer and the both floating point numbers in line 20-22 correspond to $L$, $J_1$ and $J_2$. This implementation has the possibility of (trivial) multiple 
+threading. The number of threads is chosen in line 23. The following command line arguments have to pass while starting the execution.
+\begin{itemize}
+  \item[1.] PRNG seed as unsigned integer
+  \item[2.] lower boundary of considered temperature range $T_\mathrm{min}$ as floating point number
+  \item[3.] upper boundary of considered temperature range $T_\mathrm{max}$ as floating point number
+  \item[4.] step length between two temperatures $\Delta T$ as floating point number
+  \item[5.] initial state $I$ as character \verb|F| correspond to the ferromagnetic initial state, \verb|H| to the horizontal striped one, \verb|V| to the
+            vertical striped one and \verb|U| or any other character to the uniformly distributed one
+  \item[6.] number of equilibration sweeps between two temperatures $N_\mathrm{chan}$
+  \item[7.] number of sweeps for data collection $N_\mathrm{meas}$
+  \item[8.] number of run repeations for the means and errors $N_\mathrm{repe}$
+\end{itemize}
+The chose arguments are depicted in Table \ref{table:experiment_timmons} for the different lattice length and update algorithms. The resulting executable
+generates the folder \verb|L_-_/| corresponding to the chosen lattice length and initial state as well. In this folder the \verb|txt|-files \verb|T_.txt| 
+are stored, containing the spin autocorrelation functions as function of $t_2$, associated to the simulated temperatures. Additionally, the
+means and errors of the acceptance rate as function of $T$ are stored in \verb|acceptance.txt| for the line flip proposals and spin flip proposals.
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{|lllllllll|}
+  \hline
+  $L$ & seed & $T_\mathrm{min}$ & $T_\mathrm{max}$ & $\Delta T$ & $I$ & $N_\mathrm{chan}$ & $N_\mathrm{meas}$ & $N_\mathrm{repe}$ \\
+  \hline
+  $32$  & $712,3730$  & $0.2$  & $0.5$  & $0.01$ & \verb|F| & $1.0\!\cdot\!10^5$ & $1.0\!\cdot\!10^5$ & $50$ \\
+  $64$  & $4323,9761$ & $0.2$  & $0.5$  & $0.01$ & \verb|F| & $1.0\!\cdot\!10^5$ & $1.0\!\cdot\!10^5$ & $50$ \\
+  $128$ & $6577,1373$ & $0.2$  & $0.5$  & $0.01$ & \verb|F| & $1.0\!\cdot\!10^5$ & $1.0\!\cdot\!10^5$ & $50$ \\
+        & $4116,6918$ & $0.3$  & $0.6$  & $0.01$ & \verb|U| & $5.0\!\cdot\!10^6$ & $1.0\!\cdot\!10^5$ & $4$ \\
+  \hline
+  \end{tabular}
+  \caption{All the chosen simulation parameters are shown for both update algorithms. The first PRNG seed is associated with
+           the single spin update and the second one to the line spin update.}
+  \label{table:experiment_timmons}
+\end{table}
+
+
+\subsection*{Data analysis codes}
+
+The \verb|python|-code for the data analysis is included in the folder \verb|analyzeT/|. The following parameters/arguments has be chosen 
+in line 8-10 or has to be passed as command line arguments.
+\begin{itemize}
+  \item[1.] relative path from the current working directory to the target folder \verb|L_-_/| and the corresponding name
+  \item[2.] lower boundary of considered temperature range $T_\mathrm{min}$ as floating point number 
+  \item[3.] upper boundary of considered temperature range $T_\mathrm{max}$ as floating point number
+\end{itemize}
+The code generates in \verb|L_-_/| the \verb|txt|-file \verb|relax.txt| containing the relaxations times as a function of the temperature $T$
+for the ferromagnetic, horizontal striped and vertical striped spin autocorrelation functions. Unfortunately, the code works only pretty well 
+for the targets with initial states uniformly distributed (\verb|L_-U/|).  
+
+
+

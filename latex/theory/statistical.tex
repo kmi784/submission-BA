@@ -1,0 +1,303 @@
+
+
+\section{Statistical physics treatment}
+\label{sec:statistical_physics}
+
+In this work the system under consideration is coupled with the environment through an exchange of energy, but not of particles.
+Hence, the statistical equilibrium properties of the microstates can be described by the canonical ensemble, i.e., $\bm{\sigma}$ occurs at 
+an environment temperature $T$ with a probability 
+\begin{align} 
+    P(\bm{\sigma})=Z_T^{-1}\exp\left(-\frac{\mathcal{H}(\bm{\sigma})}{kT}\right).
+    \label{align:canonical_distribution}
+\end{align}
+where $Z_T\!\!=\!\!\sum_{\bm{\sigma}}\exp(-\mathcal{H}(\bm{\sigma})/kT)$ denotes the partition function and $k$ the Boltzmann constant. Therefore, 
+the expectation value of an arbitrary observable $\mathcal{O}$ depends only on the temperature $T$ and its thermodynamic expectation value
+can be computed by
+\begin{align*}
+    \langle \mathcal{O} \rangle = \sum_{\bm{\sigma}}\mathcal{O}(\bm{\sigma})P(\bm{\sigma}).
+\end{align*}
+The equilibrium treatment through the canonical ensemble requires the ergodicity, i.e., the expectation value $\langle \mathcal{O} \rangle_\text{time}$ 
+obtained through the time evolution of the system coincides with $\langle \mathcal{O} \rangle_\text{phase space}$ received through the geometry of the 
+phase space (Ergodic Theorem), in particular its energy surface. Or in more ingenuous words, the system reaches every microstate on the energy 
+surface within a sufficiently long duration.~\cite{Landau1976,Schwabl2000} Therefore, Equation~\eqref{align:canonical_distribution} describes
+only the thermodynamic equilibrium where the probabilities are independent of the trajectory in the phase space, which in general is not always the case.
+
+Performing the summation over all possible microstates $\sum_{\bm{\sigma}}$ is generally difficult in practice. The density of states delivers a 
+concept, to overcome this difficulty. For explanation, let's consider the possible eigenvalues of the Hamiltonian $E\!=\!\mathcal{H}(\bm{\sigma})$ and 
+the possible eigenvalues of a microstate dependent observable $M\!=\!\mathcal{M}(\bm{\sigma})$. The density of states $\Omega(E,M)$ assigns 
+the number of corresponding microstates to the values $E$ and $M$. The expectation value of observables depending on $E$ and $M$,
+can then be rewritten as
+\begin{align*}
+    \langle \mathcal{O} \rangle = Z_T^{-1}\sum_{E,M}\mathcal{O}(E,M)\Omega(E,M)\exp\left(-\frac{E}{kT}\right).
+\end{align*}
+Thus, the observable implicitly depends on the microstates $\bm{\sigma}$. To avoid handling with a density of states depending on $E$ and $M$, a
+dependency reduction can be performed through $\Omega(E)\!=\!\sum_{M}\Omega(E,M)$. To compute the above expectation value, an effective
+energy dependent observable is necessary, received by
+\begin{align}
+    \langle \mathcal{O} \rangle &= Z_T^{-1}\sum_{E}\frac{\sum_M\mathcal{O}(E,M)\Omega(E,M)}{\sum_M\Omega(E,M)}\Omega(E)\exp\left(-\frac{E}{kT}\right) \nonumber \\
+                                &= Z_T^{-1}\sum_{E}\mathcal{O}_\text{eff}(E)\Omega(E)\exp\left(-\frac{E}{kT}\right).
+    \label{align:Lists}
+\end{align}
+The effective observable $\mathcal{O}_\text{eff}(E)$ is also known as list, an actual energy
+dependency of $\mathcal{O}(E,M)$ is not required. Further, $\mathcal{O}_\text{eff}(E)$ is the expectation value of $\mathcal{O}(\bm{\sigma})$ with 
+$\bm{\sigma}$ distributed according to the micro canonical ensemble (no $E$ exchange). This reduction procedure works with any observable $M$.~\cite{Janke2012}
+
+
+
+
+
+\subsection*{Thermodynamic quantities}
+
+To treat the studied thermodynamic quantities properly, consider the Hamiltonian~\eqref{align:Hamiltonian} with a non-vanishing external magnetic 
+field $h$ aligned parallelly to the spins $\sigma_i$
+\begin{align*}
+    \mathcal{H}_h(\bm{\sigma})=-J_1\sum_{\langle ij \rangle}\sigma_i\sigma_j-J_2\sum_{[ij]}\sigma_i\sigma_j+h\sum_{i=1}^N\sigma_i.
+\end{align*}
+For simplicity, let $\mathcal{M}(\bm{\sigma})$ denotes the microstate dependent sum $\sum_{i=1}^N\sigma_i$. Using the modified Hamiltonian, define 
+the thermodynamic potential
+\begin{align}
+    F(T,h)=-kT\ln\left(Z_{T,h}\right)=-kT\ln\left(\sum_{\bm{\sigma}}\exp(-\mathcal{H}_h(\bm{\sigma})/kT)\right),
+    \label{align:FreeEnergy}
+\end{align}
+also known as canonical free energy. Its partial derivatives are given by
+\begin{align}
+    \partial_TF(T,h) &= -k\ln\left(Z_{T,h}\right)-\frac{kT}{Z_{T,h}} \sum_{\bm{\sigma}}\frac{\mathcal{H}_h(\bm{\sigma})}{kT^2}\exp\left(-\frac{\mathcal{H}_h(\bm{\sigma})}{kT}\right) \nonumber \\
+                     &= -k\ln\left(Z_{T,h}\right)-\frac{\left\langle E \right\rangle}{T} \label{align:ener} \\
+    \partial_hF(T,h) &= \frac{kT}{Z_{T,h}}\sum_{\bm{\sigma}}\frac{\partial_h\left(\mathcal{H}(\bm{\sigma})+h\mathcal{M}(\bm{\sigma})\right)}{kT}\exp\left(-\frac{\mathcal{H}_h(\bm{\sigma})}{kT}\right) \nonumber \\
+                     &= -\left\langle M \right\rangle, \label{align:magn}
+\end{align}
+where the non-respected macroscopic state variables are kept fixed. Especially, both the internal energy $\left\langle E \right\rangle$ 
+and the conventional magnetization\footnote{The term conventional is used, because some modified magnetizations are defined in the following.} 
+$\left\langle M \right\rangle$ can be obtained through partial derivatives of the free energy $F$. 
+Furthermore, the internal energy is a function received via a Legendre-transformation~\cite[p.79]{Schwabl2000} of the free energy, i.e., 
+$\left\langle E \right\rangle\!(\partial_TF,h)=T\partial_TF(T,h)\!-\!F(T,h)$. Other relevant thermodynamic quantities are the specific heat $c_V$ and
+susceptibility $\chi$ defined as the second partial derivatives of the free energy 
+\begin{align}
+    c_V  \!&=\! -\frac{T\partial_T^2F(T,h)}{N} 
+          = \frac{T}{N}\left( - \frac{k}{Z_{T,h}}\!\sum_{\bm{\sigma}}\frac{\mathcal{H}_h(\bm{\sigma})}{kT^2}\exp\left(-\frac{\mathcal{H}_h(\bm{\sigma})}{kT}\right) 
+                              + \frac{\langle E \rangle}{T^2} + \frac{\partial_T\langle E \rangle}{T}\right) \nonumber \\
+         &= \frac{\sum_{\bm{\sigma}}\mathcal{H}_h(\bm{\sigma})\partial_T\exp\left(-\mathcal{H}_h(\bm{\sigma})/kT\right)}
+                 {NZ_{T,h}}
+           -\frac{\langle E \rangle\sum_{\bm{\sigma}}\partial_T\exp\left(-\mathcal{H}_h(\bm{\sigma})/kT\right)}
+                 {NZ_{T,h}} \nonumber \\
+         &= \frac{\langle E^2 \rangle-\langle E \rangle^2}{NkT^2}  \label{align:heat} \\
+    \chi &= -\frac{\partial_h^2F(T,h)}{N} = \frac{\partial_h\langle M \rangle}{N} \nonumber \\
+         &= \frac{\sum_{\bm{\sigma}}\mathcal{M}(\bm{\sigma})\partial_h\exp\left(-\mathcal{H}_h(\bm{\sigma})/kT\right)}
+                 {NZ_{T,h}}
+           -\frac{\langle M \rangle\sum_{\bm{\sigma}}\partial_h\exp\left(-\mathcal{H}_h(\bm{\sigma})/kT\right)}
+                 {NZ_{T,h}} \nonumber \\
+         &= \frac{\langle M^2 \rangle-\langle M \rangle^2}{NkT}. \label{align:susc} 
+\end{align}
+Therefore, the internal energy, conventional magnetization, specific heat and susceptibility can be expressed both in terms of partial derivatives of a 
+thermodynamic potential  and in terms of expectation values. This fact justifies the importance of these observables for critical phenomena studies with 
+computer simulations.~\cite{Schwabl2000}
+
+The quantities above are these for a non-vanishing external field. Taking the limit $\lim_{h\to0}\mathcal{O}$ corresponding to 
+$\mathcal{H}_h,Z_{T,h}\to\mathcal{H},Z_T$, the quantities are obtained for $h\!=\!0$.  
+
+
+
+
+
+\section{Phase transition}
+\label{sec:phase_transitions}
+
+In thermodynamics there exists critical phenomena so-called phase transitions, where the system is subjected to significant property changes. Such 
+transitions occur through changes in the symmetry of the system, i.e., changes to a state of more (or less) symmetry or changes between different unrelated 
+symmetries~\cite{Landau1976}. The different states are called phases, the state with the lower symmetry is named ordered phase, as opposed to the 
+disordered phase of higher symmetry. The engine of such transitions are variations of the macroscopic state variables. In the considered case 
+these are the temperature $T$ and the external magnetic field $h$. To describe these phenomena quantitatively, an order parameter is commonly used, 
+assigning to the ordered phase a finite value and vanishing for the disordered one. More generally, the order parameter is finite at one of the phases 
+and vanishes at the other one, but such an order parameter does not always exist.~\cite{Landau1976,Schwabl2000}
+
+For the system under consideration, a quantity of high interest is the two point spin correlation function
+\begin{align*}
+    G(i,t_1,j,t_2)=\langle \sigma_i(t_1)\sigma_j(t_2) \rangle - \langle \sigma_i(t_1) \rangle\langle \sigma_j(t_2) \rangle,
+\end{align*}
+where $t_1,t_2$ denotes two times in system history. To achieve a better understanding of this function, let's consider the term 
+$1\!+\!\langle \sigma_i(t_1)\sigma_j(t_2) \rangle$, which is proportional to the probability of observing the $i^\text{th}$ spin at $t_1$
+aligned equally to the $j^\text{th}$ spin at $t_2$~\cite{Stanley1987}. Hence, this correlation function evaluates the microscopic relations of the 
+system so $G(i,t_1,j,t_2)$ quantifies the correlations between $\sigma_i(t_1)$ and $\sigma_j(t_2)$. The considered system has translation 
+invariance, therefore $G$ is actually a function of the delay $j\!-\!i$. Two cases can be examined, firstly, at $t_1\!=\!t_2$, the two point spin correlation
+function decays exponentially for large delays $j\!-\!i\gg 1$ according to
+\begin{align*}
+    G(j\!-\!i)\propto |a\cdot(j\!-\!i)|^{-\kappa}\exp\left(-\frac{a\cdot(j\!-\!i)}{\xi}\right),
+\end{align*}
+with the lattice constant $a$, a dimension and system dependent exponent $\kappa$ and the spatial correlation length $\xi$ modelling the effective 
+affecting range of a spin~\cite{Janke2012}. Secondly, for $j\!-\!i=0$, it is convenient to average the spin values over 
+the whole lattice, because no lattice site is preferable under periodic boundary condition. Furthermore, to normalize the resulting expression to unity 
+for $t_1\!=\!t_2$ and afterward to take the thermodynamic expectation value. Thus, the general expression of the two point spin correlation function becomes
+\begin{align}
+    G(t_1,t_2) &= \left\langle \frac{\frac{1}{N}\sum_{i=1}^N\sigma_i(t_1)\sigma_i(t_2)-\frac{1}{N}\sum_{i=1}^N\sigma_i(t_1)\cdot\frac{1}{N}\sum_{i=1}^N\sigma_i(t_2)}
+                                    {1-\frac{1}{N}\sum_{i=1}^N\sigma_i(t_1)\cdot\frac{1}{N}\sum_{i=1}^N\sigma_i(t_2)}\right\rangle \nonumber \\
+               &= \left\langle \frac{N\sum_{i=1}^N\sigma_i(t_1)\sigma_i(t_2)-\mathcal{M}(\bm{\sigma}(t_1))\mathcal{M}(\bm{\sigma}(t_2))}
+                                    {N^2-\mathcal{M}(\bm{\sigma}(t_1))\mathcal{M}(\bm{\sigma}(t_2))}\right\rangle.
+    \label{align:spin_correlation}
+\end{align}
+
+In a mathematical sense, the free energy $F(T,h)$ is a non-analytical function at the phase transition. Hence, phase transitions can be characterized 
+according to the discontinuities of the partial derivatives of $F(T,h)$. A phase transition is called discontinuous if $F(T,h)$ is continuous and at least 
+one  of the first derivatives has a discontinuity. A continuous phase transition is classified through a continuous first partial derivatives and singularities
+or discontinuities in the higher order.~\cite{Schwabl2000} Of course there are some exotic cases, which cannot be classified in a conventional fashion. It 
+should be emphasized that these discontinuities and singularities actually appear for infinite system sizes only in the thermodynamic limit. For finite systems 
+the free energy is usually analytical. Only finite system sizes are possible in computer simulation studies. Therefore, the results have to be extrapolated 
+to $N\!\to\!\infty$.~\cite{Janke2012}
+
+In the following, the conventional kinds of phase transitions are shortly described, as well as a representative of the exotic ones. Additionally, the discussions
+are limited to the temperature driven phase transitions. Thus, the phase transition point is located through a critical temperature $T_c$.
+
+
+
+
+
+\subsection*{Discontinuous phase transition}
+
+As mentioned, this kind of phase transitions are characterized by discontinuous changes of the first partial derivative of the free energy. Hence, discontinuities
+in the entropy $S\!=\!-\partial_TF(T,h)$ or magnetization $\langle M\rangle\!=\!-\partial_hF(T,h)$ suggest $\delta$-function singularities of the specific heat
+or the susceptibility. The free energy is reflected by two different analytical functions
+$F_1(T,h)$ for $T\!<\!T_c$ and $F_2(T,h)$ for $T\!>\!T_c$, satisfying the continuity condition $F_1(T_c,h)\!=\!F_2(T_c,h)$ at the transition point. 
+Each function corresponds to a phase~\cite{Landau1976}. Thus, the 
+transition point exhibits a coexisting state of both phases, implying a finite spatial correlation length $\xi$, i.e., there are finite regions 
+corresponding to the phases  involved. In simulation studies, such phenomena are noticeable by double-peaked energy or magnetization histograms,
+where each peak corresponds to one of the phases.~\cite{Janke2003}
+
+The considered system is subjected to a discontinuous phase transition for $J_2/J_1\!\in\!(-g^*,-1/2)$ with $g^*\!\approx\!0.67$~\cite{Jin2012}, which is 
+still under debate. This
+critical behavior is supported by the work of Kalz et al.~\cite{Kalz2008} as well. Especially, they obtain the double-peaked histograms and argue
+for a $\delta$-function singularity of the specific heat in the thermodynamic limit. For this case, the ground-states are super-antiferromagnetic as pointed 
+out in Section~\ref{sec:GroundState}. This justifies the following choice of the order parameter
+\begin{align}
+    \mathcal{M}_s(\bm{\sigma}) = \begin{cases}
+                                    \mathcal{M}_h(\bm{\sigma})=\sum_{i=1}^N(-1)^{x_i}\sigma_i & \text{for } |\mathcal{M}_h|>|\mathcal{M}_v| \\
+                                    \mathcal{M}_v(\bm{\sigma})=\sum_{i=1}^N(-1)^{y_i}\sigma_i & \text{for } |\mathcal{M}_h|\le|\mathcal{M}_v|
+                                 \end{cases}
+    \label{align:stripped_magnetization}
+\end{align}
+where $x_i,y_i\!\in\!\{1,...,L\}$ index the columns and rows of the lattice. $\mathcal{M}_s$ assigns the super-antiferromagnetic ground-states with 
+$\pm N$ and effectively vanishes for spin configurations distributed uniformly (corresponding to the high temperature phase). Furthermore, 
+$\langle M_{s,h,v}\rangle$ can be considered as modified magnetizations and all previous expressions of quantities containing the conventional magnetization 
+can be adjusted by replacing $\mathcal{M}$ with $\mathcal{M}_{s,h,v}$, like Equations~\eqref{align:susc} and~\eqref{align:spin_correlation}. 
+In the following, the index $s,h,v$ is related to this very replacement. 
+
+
+
+
+
+\subsection*{Continuous  phase transition}
+
+The phase transitions of continuous kind have at least continuous changes of the free energy and their first partial derivatives. The ones being discontinuous
+in their second derivatives in form of singularities have a major status and are being examined in the following. The corresponding free energy can be expressed 
+by a single continuously differentiable function describing both phases. Therefore, the transition point exhibits a continuous mixture containing the symmetries 
+of both phases, i.e., there is no coexisting of finite regions corresponding to the different phases and rather a single "transition phase" subjected to the whole 
+system.~\cite{Landau1976,Schwabl2000} Hence, the spatial correlation length diverges $\xi\!\to\!\infty$ at $T_c$, according to the power law
+$$ \xi \propto\left|1-T/T_c\right|^{-\nu}+\Delta_\xi, $$
+where $\nu$ denotes a characteristic exponent also known as the critical exponent and $\Delta_\xi$ is a correction term. The 
+singularities of the second partial derivatives of $F(T,h)$ and the order parameter (for the magnetic systems, $\langle M \rangle$) behaves according to 
+power laws in the vicinity of $T_c$ as well,
+$$ c \propto \left|1-T/T_c\right|^{-\alpha}+\Delta_c,$$
+$$ \langle M \rangle \propto \left(1-T/T_c\right)^{\beta}+\Delta_M \  \text{ for } \  T<T_c, $$
+$$ \chi \propto \left|1-T/T_c\right|^{-\gamma}+\Delta_\chi, $$
+with the critical exponents $\alpha,\beta,\gamma$ and the correction terms $\Delta_{(\cdot)}$.~\cite{Janke2012} The possible values of the exponents 
+$\alpha,\beta,\gamma,\nu$ define the universality of critical phenomena, i.e., in proximity of $T_c$, the microscopic details of the interactions becomes 
+irrelevant and only universal properties, like dimension, symmetry of the order parameter or general character of the interaction are essential. 
+Therefore, different systems with the same universal properties behave equally in the vicinity of $T_c$. These facts are supported by the renormalization
+group theory.~\cite{Schwabl2000} In computer simulation studies, it is impossible to observe actual divergences, because only finite system sizes are 
+possible such that the singularities appear rather as dislocated and rounded peaks, and it is necessary to extrapolate the finite size observations
+to an infinite system size (thermodynamic limit). This can be done with the finite-size scaling approach $\xi\to L$, where $L$ is the linear system size 
+(lattice length), implying the relation
+\begin{align}
+    \left|1-T/T_c\right| \propto L^{-1/\nu}.
+    \label{align:FSS_power}
+\end{align}
+For finite systems the spatial correlation length is limited by $L$, justifying the replacement of $\xi$ with large $L$.~\cite{Janke2012} 
+
+The discussion above holds for a huge number of systems but in some cases the phase transition exhibits a continuous character and a different spatial
+correlation length divergence, i.e., the power law divergence of $\xi$ is not strong enough, causing an exponential divergence
+\begin{align*}
+    \xi \propto \exp\left(c\left| 1-T/T_c \right|^{-\overline{\nu}}\right) + \Delta_\xi,
+\end{align*}
+with some system dependent constant $c$ and a new exponent $\overline{\nu}$. Similarly, the finite-size approach can be followed according to the replacement 
+of $\xi$ with large $L/L_0$, leading to the relation
+\begin{align}
+    \left|1-T/T_c\right| \propto \left( \ln\left(L/L_0\right)\right)^{-1/\overline{\nu}},
+    \label{align:FSS_exponential}
+\end{align}
+with a system dependent characteristic length scale $L_0$. This idea is originated by a work of Kosterlitz~\cite{Kosterlitz1974}, studying the 
+two-dimensional XY-model ($\overline{\nu}=1/2$).
+
+Back to the considered system of this thesis, different papers~\cite{Kalz2008,Landau1980,Li2021} point out that the kind of the phase transition is 
+continuous for the system with $J_2/J_1\!\in\!(-1/2,0]$. The corresponding order parameter is the conventional magnetization $\mathcal{M}(\bm{\sigma})$. 
+Furthermore, they found the same set of critical exponents as the conventional Ising model ($J_2/J_1=0$), suggesting
+a membership of the Ising universality class. Hence, all mentioned variations of the considered system behave equally in proximity of there 
+respective transition point. It should be emphasized that the critical exponents are equal but the transition temperatures $T_c$ differ. 
+
+
+
+
+
+\subsection*{Glassy phase transition}
+
+These kinds of phase transition are subjects of recent researches. There are dynamical and static approaches to treat these phase transitions in the context 
+of statistical physics. In the low temperature phase, the difficulty of this kind originates from the non-ergodic behavior and the huge number of deep free 
+energy valleys (metastable states), i.e., the system is easily trapped in a sub-state space and effectively freezes in this state. 
+Especially, the states minimizing the free energy in the state space have a random character, thus the corresponding microstates have no significant 
+similarities and appear disordered or asymmetrical (no ordered patterns in a conventional sense such as the ferromagnetic or super-antiferromagnetic ones). 
+Usually, the freezing into a metastable state results from competing interactions. Conventionally, the term 
+"glassy" is distinguished in spin glasses and structural glasses.~\cite{Binder1986,Mezard2000}
+
+A spin glass is commonly characterized by freezing into a metastable state and quenched disorder, i.e., the system depends 
+explicitly on random variables that are independent of time on all experimental
+time scales~\cite{Binder1986}. In context of spin glasses the freezing property is also known as
+frustration. The latter property can be explained by the Edwards-Anderson model defined as the Hamiltonian
+\begin{align*}
+    \mathcal{H}(\bm{\sigma})=-\sum_{\langle ij \rangle}J_{ij}\sigma_i\sigma_j,
+\end{align*}
+with Gaussian-distributed $J_{ij}$. The thermodynamic quantities of interest are obtained through their averages over different system realizations 
+corresponding to a set of $J_{ij}$ drawn randomly, also known as replica. Hence, the disordered appearance of the metastable states or "random-valleys"
+in the free energy results from explicit random variables in the Hamiltonian.~\cite{Binder1986} However, some newer publications, like 
+Ref.~\cite{Westfahl2001,Kamber2020}, argue for spin glass without quenched disorder, i.e., self generated randomness.
+
+
+
+A structural glass effectively freezes into an unsymmetrical microstate as well, denoted in this context as an amorphous state. However, their origin is 
+different, the randomness or disorder of the metastable states is self generated like the arrangement of the atomic bonds in chemical glass. Therefore, the 
+"random-valleys" characteristic of the free energy is a system related property and less artificial than in spin glasses, i.e., the main difference
+to spin glasses is the absence of quenched disorder. Thus, the replicas result from independent system preparations and not from a new set of random 
+variables.~\cite{Mezard2000}
+
+Kirkpatrick et al. begin to blur the boundaries between spin glasses and structural glasses in their papers~\cite{Kirkpatrick1986,Kirkpatrick1987},
+mentioning analogies between structural glasses and Potts spin glasses. They list similarities to discontinuous phase transitions and 
+suggest possible glassy behavior of frustrated regular spin problems. Furthermore, these kinds of
+problems are named discontinuous spin glasses, which exhibits a continuous change of the entropy, internal energy and a discontinuous
+change of the order parameter~\cite{Mezard2000}. A general theory containing these kinds of problems is developed in a paper of Westfahl et al.~\cite{Westfahl2001}. 
+
+This analytical approach predicts a possible temperature range of the glass transition temperature $T_g$, where the system effectively freezes into a 
+metastable state, i.e., $T_g\!\in\!(T_K,T_A)$ with the limit temperatures $T_K,T_A$ of glassy behavior. M\'ezard et al.~\cite{Mezard2000} mention a relaxation 
+time $\tau$ divergence of the spin autocorrelations 
+at $T_g$ where the explicit value of this temperature depends on the cooling rate~\cite{Westfahl2001}. The lower boundary $T_K$ corresponds to the ideal 
+glass transition temperature in the infinite cooling rate limit~\cite{Timmons2018}. A connection between $\tau$ and the limit temperature $T_K$ is
+given by the Vogel-Fulcher law~\cite{Kirkpatrick1987,Westfahl2001}
+\begin{align}
+    \tau\propto\exp\left(\frac{c\cdot T_K}{T-T_K}\right).
+    \label{align:Vogel_Fulcher}
+\end{align}
+The upper boundary $T_A$ exhibits the occurrence temperature of the metastable state~\cite{Kirkpatrick1987}, i.e., 
+these states appear with a non-negligible probability, resulting in significantly increasing spin autocorrelations, because the system is subjected to 
+strong memory effects.
+
+The nature of the system under consideration for $J_2/J_1\!=-\!1/2$ is unclear in the low temperature range (nonzero $T$). There are some evidence supporting
+a glassy behavior depicted above~\cite{Timmons2018}. Firstly, the huge number of metastable states (degeneracy), Section~\ref{sec:GroundState} and the frustration 
+arising from the competition between the  NN-term and repulsive NNN-term in the Hamiltonian~\eqref{align:Hamiltonian}. Secondly, discontinuous spin glasses 
+have both a continuous and discontinuous character, which may connect the two regimes for $J_2/J_1\!\in\!(-g^*,-1/2)$ and $J_2/J_1\!\in\!(-1/2,0]$.
+However, there are also evidences against it, like the absence of the random or disordered characteristic of the metastable states, and 
+especially the ordered form of the ground-states~\cite{Kalz2008,Lee2024}.
+
+
+
+
+
+
+
+
+
+

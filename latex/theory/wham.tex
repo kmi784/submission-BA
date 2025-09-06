@@ -1,0 +1,106 @@
+
+\section{Multi-histogram reweighing}
+\label{sec:wham}
+
+Multi-histogram reweighing or weighted histogram analysis method (WHAM) is a powerful technique to obtain an observable as a function of
+the temperature $T$ as smooth curve. The multi-histogram reweighing refers to multiple temperatures in contrast to the simple histogram 
+reweighing, referring to a single $T$. For explanation, let $(T_i,M_i)$ for $i\!\in\!\{1,...,m\}$ be the simulation points, i.e., the system 
+was simulated at the temperature $T_i$ with $M_i$ measurements. The idea is to estimate the unknown density of states $\Omega(E)$ using 
+the measurement of the observable
+\begin{align*}
+    H_i(E)=\sum_{k=1}^{M_i}\delta_{EE_k},
+\end{align*}
+also known as the unnormalized histogram. The index $i$ denotes the simulation point at the temperature $T_i$, the index $k$
+refers to the $k^\text{th}$ measurement of the energy at $T_i$ and $\delta_{EE'}$ is the Kronecker-delta. This observable gives an estimator of 
+the energy probability distribution
+\begin{align*}
+    P_{T_i}(E)=\frac{\Omega(E)\exp(-E/kT_i)}{Z_{T_i}} \  \  \text{therefore,} \  \  \hat{P}_i(E)=\frac{H_i(E)}{M_i} \  \  \text{holds.}
+\end{align*}
+Implying an estimator for the density of states for each simulation point 
+\begin{align*}
+    \hat{\Omega}_i(E)=Z_i\exp(E/kT_i)\hat{P}_i(E)=Z_i\exp(E/kT_i)\frac{H_i(E)}{M_i} ,
+\end{align*}
+the index $i$ does only refer to the estimates at the corresponding simulation point, though the exact density of states is independent of $T$.
+Hence, these estimates has to be combined to a common one. This combination can be performed similarly to the weighed average
+of the differences between data points and the chosen model of the least square approximation, Section~\ref{sec:LeasatSquare}. Thus, the variance 
+weighed average of the density of states should be computed by
+\begin{align*}
+    \hat{\Omega}(E)=\sum_{i=1}^m\frac{1/\sigma^2_{\hat{\Omega}_i}(E)}{\sum_{i=1}^m1/\sigma^2_{\hat{\Omega}_i}(E)}\hat{\Omega}_i(E),
+\end{align*}
+with $\sigma^2_{\hat{\Omega}_i}(E)$ being the variance of $\hat{\Omega}_i(E)$ at an explicit energy $E$. Determining these variances by the following 
+calculation
+\begin{align*}
+    \sigma^2_{\hat{\Omega}_i}(E) &\!=\! \frac{Z_i^2\exp(2E/kT_i)}{M^2_i}\sigma^2_{H_i}(E)
+                                  \!=\! \frac{Z_i^2\exp(2E/kT_i)}{M^2_i}\left(\langle H_i(E)^2\rangle-\langle H_i(E)\rangle^2\right) \\
+                                 &\!=\! \frac{Z_i^2\exp(2E/kT_i)}{M^2_i}
+                                        \!\left(\sum_{k,l=1}^{M_i}\langle\delta_{EE_k}\delta_{EE_l}\rangle-
+                                                \sum_{k,l=1}^{M_i}\langle\delta_{EE_k}\rangle\langle\delta_{EE_l}\rangle\right)\\
+                                 &\!=\! \frac{Z_i^2\exp(2E/kT_i)}{M^2_i}
+                                        \!\left(\!\sum_{k=1}^{M_i}\!\langle\delta_{EE_k}^2\rangle\!-\!\langle\delta_{EE_k}\rangle^2+\!
+                                                \sum_{k\neq l}^{M_i}\!\langle\delta_{EE_k}\delta_{EE_l}\rangle\!-\!\langle\delta_{EE_k}\rangle\langle\delta_{EE_l}\rangle\!\!\right)\!,\\
+\end{align*}
+the expressions in the brackets can be rewritten in terms of quantities mentioned in Section~\ref{sec:error}.~\cite{Janke2012}
+
+To do that let's consider the first term, which is the variance of the observable $\delta_{EE_k}$.
+It holds that $P_{T_i}(E)=\langle H_i(E)\rangle/M_i$ because $H_i(E)/M_i$ is an estimator of $P_{T_i}(E)$ and the expectation value of an estimator
+should be coincided with the theoretical one.
+Assuming an equilibrated distribution of the measurement $\delta_{EE_k}$, then it should 
+always also hold that $\langle\delta_{EE_k}\rangle=\langle\delta_{EE_l}\rangle$ for all $k,l$. Hence, the expectation value of $H_i(E)$ can be expressed as
+\begin{align*}
+    M_iP_{T_i}(E)=\langle H_i(E)\rangle=\left\langle\sum_{k=1}^{M_i}\delta_{EE_k}\right\rangle
+             =\sum_{k=1}^{M_i}\langle\delta_{EE_k}\rangle=M_i\langle\delta_{EE_{\tilde{k}}}\rangle_i \  \  \forall \tilde{k}, 
+\end{align*}
+and thus $P_{T_i}(E)\!=\!\langle\delta_{EE_{\tilde{k}}}\rangle_i$ holds for all $\tilde{k}$. Therefore, it follows for the variance of $\delta_{EE_k}$ that
+\begin{align*}
+    \sigma^2_{\delta,i}(E)=\sum_{k=1}^{M_i}\langle\delta_{EE_k}^2\rangle\!-\!\langle\delta_{EE_k}\rangle^2=\sum_{k=1}^{M_i}\langle\delta_{EE_k}\rangle\!-\!\langle\delta_{EE_k}\rangle^2
+                            =M_iP_{T_i}(E)(1\!-\!P_{T_i}(E)). 
+\end{align*}
+
+The second expression in the brackets describes the correlation between the measurements. Resolving this one in terms of the integrated 
+autocorrelation time of Equation~\eqref{align:autoTimeInt} with $\mathcal{O}(\bm{\sigma}_k)=\delta_{EE_k}$ leads to
+\begin{align*}
+    \sum_{k\neq l}^{M_i}\langle\delta_{EE_k}&\delta_{EE_l}\rangle\!-\!\langle\delta_{EE_k}\rangle\langle\delta_{EE_l}\rangle
+    =2\sigma^2_{\delta,i}(E)\left(\tau_{\mathrm{int},i}(E)-\frac{1}{2}\right).
+\end{align*}
+
+These rewritten terms are inserted in the variance of $\hat{\Omega}_i(E)$ and further it is assumed that the simulated system has a large number of 
+possible energies $E$ such that $P_{T_i}(E)$ is much smaller than one, resulting in
+\begin{align*}
+    \sigma^2_{\hat{\Omega}_i}(E) &= \frac{Z_i^2\exp(2E/kT_i)}{M^2_i}\sigma^2_{\delta,i}(E)\left(1\!+\!2\left(\tau_{\mathrm{int},i}(E)\!-\!\frac{1}{2}\right)\right) \\
+     &= \frac{Z_i^2\exp(2E/kT_i)}{M_i/(2\tau_{\mathrm{int},i}(E))}P_{T_i}(E)(1\!-\!P_{T_i}(E)) 
+      = \frac{Z_i^2\exp(2E/kT_i)}{M_i/(2\tau_{\mathrm{int},i}(E))}P_{T_i}(E) \\
+     &= \frac{Z_i\exp(E/kT_i)}{M_i/(2\tau_{\mathrm{int},i}(E))}\Omega(E).
+\end{align*}
+In the penultimate step, $(1\!-\!P_{T_i}(E))$ is set to unity, because the above assumption is satisfied by the system under consideration for 
+the corresponding lattice lengths. Using this term for the variance weighed average of the density of states $\hat{\Omega}(E)$ leads to
+\begin{align*}
+    \hat{\Omega}(E) &= \frac{\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}Z_i^{-1}\exp(-E/kT_i)\hat{\Omega}_i(E)/\Omega(E)}
+                            {\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}Z_i^{-1}\exp(-E/kT_i)/\Omega(E)} \\ 
+                    &= \frac{\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}\hat{P}_i(E)}
+                            {\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}Z_i^{-1}\exp(-E/kT_i)} \\
+                    &= \frac{\sum_{i=1}^mH_i(E)/(2\tau_{\mathrm{int},i}(E))}
+                            {\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}Z_i^{-1}\exp(-E/kT_i)}, 
+\end{align*}
+where it should be emphasized, that $\Omega(E)$ is the exact density of states and therefore independent of the index $i$, and hence $\Omega(E)$ 
+cancels out. In a practical context, the estimator above is not useable in a conventional way because the values of the partition function $Z_i$
+at the corresponding $T_i$ are unknown. This dilemma can be solved by choosing a set of arbitrary $Z_i$ inserting these into $\hat{\Omega}(E)$ and computing
+\begin{align*}
+    Z_j=\sum_E\frac{\sum_{i=1}^mH_i(E)/(2\tau_{\mathrm{int},i}(E))}{\sum_{i=1}^m\frac{M_i}{2\tau_{\mathrm{int},i}(E)}Z_i^{-1}\exp(-E/kT_i)}\exp(-E/kT_j) \  \  \  \text{for} \  \  j\in\{1,...,m\}.
+\end{align*}
+Finally, this procedure has to be repeated with the new values of $Z_i$ until the required accuracy is achieved. This delivers a converging algorithm to estimate the 
+density of states.~\cite{Janke2012}
+
+Usually, two main problems appear in practice. Firstly, computing $\tau_{\mathrm{int},i}(E)$ for each simulation point and all corresponding energy 
+bins is quite cumbersome. In most works, these autocorrelation times are neglected e.g.~\cite{Chodera2007}, which is also done in the implementations of 
+this thesis. Secondly, evaluating the sums in the nominator and denominator 
+of $\hat{\Omega}(E)$ mostly results in huge numbers. Working with the logarithm of the nominator and denominator avoids overflow errors in implementations.
+However, this leads to the question of how to perform the summation without overflows. For example, the evaluation of $\ln(s_k)$ where $s_k=\sum_{i=1}^k\exp(x_i)$ 
+for $k\!\in\!\{1,..,m\}$ should be done without dealing directly with the huge numbers $\exp(x_i)$. The following identity can be used iteratively
+\begin{align*}
+    \ln(s_{k+1})=   \begin{cases}
+                        x_{k+1}\!+\!\ln(1\!+\!\exp(\ln(s_k)\!-\!x_{k+1})) & \text{ for } \ln(s_k) \le x_{k+1} \\
+                        \ln(s_k)\!+\!\ln(1\!+\!\exp(x_{k+1}\!-\!\ln(s_k))) & \text{ for } \ln(s_k) > x_{k+1}
+                    \end{cases}.
+\end{align*}
+
+

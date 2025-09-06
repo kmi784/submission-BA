@@ -1,0 +1,41 @@
+
+
+\begin{tikzpicture}
+    \matrix[
+        matrix of math nodes,
+        matrix anchor=west,
+        row sep=2ex,
+        column sep=2ex,
+        ] (m1) at (0,0)
+        {
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+            \doF\upE & \doF\upE & \doF\upE & \dots & \doF\upE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+                &     & \downarrow & \\ 
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\                  
+        };
+    \matrix[
+        matrix of math nodes,
+        matrix anchor=west,
+        row sep=2ex,
+        column sep=2ex,
+        ] (m2) at (5,0)
+        {
+            \doF\upE & \doF\upE & \doF\upE & \dots & \doF\upE \\
+            \doF\upE & \doF\upE & \doF\upE & \dots & \doF\upE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+                &     & \downarrow & \\ 
+            \doF\upE & \doF\upE & \doF\upE & \dots & \doF\upE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\
+            \upF\doE & \upF\doE & \upF\doE & \dots & \upF\doE \\                    
+        };
+        \begin{scope}[on background layer]
+            \node[fit=(m1-2-1)(m1-2-5), fill=white!70!black, rounded corners] {};
+            \node[fit=(m1-6-1)(m1-6-5), fill=white!70!black, rounded corners] {};
+            \node[fit=(m2-2-1)(m2-2-5), fill=white!70!black, rounded corners] {};
+            \node[fit=(m2-6-1)(m2-6-5), fill=white!70!black, rounded corners] {};            
+        \end{scope}                                                             
+        ; 
+\end{tikzpicture}
