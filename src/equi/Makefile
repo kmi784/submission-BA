@@ -1,9 +1,17 @@
-FILE := mean.cpp
+FILE ?= mean.cpp
 FLAGS := -std=c++20 -O2
 
-ARG := ../../data/raw/equi/L30-U ./mean.txt 30 
-#ARG := ../../data/raw/equi/L30-U ./peak.txt 50 0.35 0.4 200
-#ARG := ../../data/raw/equi/L30-U ./wham.txt 0.35 0.55 200
+ifeq ($(basename $(FILE)), mean)
+    ARG := ../../data/raw/equi/L30-U ./mean.txt 30
+endif
+
+ifeq ($(basename $(FILE)), peak)
+    ARG := ../../data/raw/equi/L30-U ./peak.txt 50 0.35 0.4 200
+endif
+
+ifeq ($(basename $(FILE)), wham)
+    ARG := ../../data/raw/equi/L30-U ./wham.txt 0.35 0.55 200
+endif
 
 debug: $(FILE) 
 	g++ $(FLAGS) -Wall -Wpedantic -Wsign-conversion $(FILE) -o debug

@@ -5,10 +5,10 @@ set terminal epslatex size 12.1cm,8.5cm color standalone font 8
 #**********************************************************************
 
 
-path = '../../data/kalz/'
-mean = '-U_g6/mean.txt'
-wham = '-U_g6/wham.txt'
-theo = '-U_g6/kalz.txt'
+path = '../../data/plots/equi/'
+mean = '-U_g6-mean.txt'
+wham = '-U_g6-wham.txt'
+theo = '-U_g6-kalz.txt'
 
 
 set multiplot 
