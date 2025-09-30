@@ -1,4 +1,3 @@
-
 GPDIRS=.
 INCFILE=./include.gp
 TEMPLATEFILE=./template.gp
@@ -13,17 +12,15 @@ GPFILES=$T
 # regular expression replacement
 OBJECTS=$(patsubst %.gp,%.eps,$(GPFILES))
 
-
-
 all: $(OBJECTS)
 
-
 %.eps:%.gp $(INCFILE)
-	gnuplot $<
+	@gnuplot $<
 	@latex $(patsubst %.gp,%.tex,$<)
 	@dvips $(patsubst %.gp,%.dvi,$<)
 	@mv $(patsubst %.gp,%.ps,$<) $(patsubst %.gp,%.eps,$<)
 	@rm $(patsubst %.gp,%.dvi,$<) $(patsubst %.gp,%.aux,$<) $(patsubst %.gp,%-inc.eps,$<) $(patsubst %.gp,%.log,$<) $(patsubst %.gp,%.tex,$<)
 
 clean:
-	rm -rf $(OBJECTS) *.pdf
+	@rm -rf $(OBJECTS) $(patsubst %.eps,%-eps-converted-to.pdf,$(OBJECTS))
+

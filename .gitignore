@@ -12,9 +12,11 @@ data/snap/*
 !data/snap/.gitkeep
 
 latex/auxiliary
+latex/images/*eps
+latex/images/*pdf
 latex/plots/*.eps
 latex/plots/*.pdf
-latex/svg-inkscape
+
 
 literature
 anmeldung.pdf
