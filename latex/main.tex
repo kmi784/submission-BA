@@ -1,5 +1,5 @@
 
-\documentclass[openany]{report}
+\documentclass[openany, a4paper]{report}
 
 
 
@@ -74,40 +74,34 @@
 }
 
 
-
-
-%******************** Title ********************
-\title{
-        {\includegraphics[scale=1.5]{images/logo.eps}} \\
-        \vspace{1cm}
-        {\large Bachelor Thesis} \\ 
-        {Ising model on a square lattice with competing nearest and next-nearest neighbor interactions} \\
-        {\large  Institut für Theoretische Physik Leipzig} \\
-        \vspace{7cm} 
-        \begin{table}[b]
-          \begin{tabular}{ll}
-            \multicolumn{2}{l}{\footnotesize{Eingereicht am 17. September 2024}} \\
-            \multicolumn{2}{l}{} \\
-            1. Gutachter: & Prof. Dr. Wolfhard Janke \\
-            2. Gutachter: & Denis Gessert \\
-          \end{tabular}
-        \end{table}
-      } 
-\author{Kaspar Mitte \\ Matrikelnummer: 3704209}
-\date{}
-%************************************************
-
-
-
 %**********************************************************************
 \begin{document} %*****************************************************
 \pagenumbering{gobble} %***********************************************
-\maketitle %***********************************************************
 %**********************************************************************
 
+\begin{titlepage}
+    \centering
+    \includegraphics[scale=1.5]{images/logo.eps}\\[1.5cm]
+    {\large Bachelor Thesis}\\[0.5cm]
+    {\LARGE Ising model on a square lattice with competing\\
+    nearest and next-nearest neighbor interactions}\\[0.8cm]
+    {\large Institut für Theoretische Physik Leipzig}\\[4cm]
+    \vfill
+    \centering
+    Kaspar Mitte\\
+    Matrikelnummer: 3704209
+\end{titlepage} 
 
 
-\newpage
+\begin{titlepage}
+  \null         
+  \vfill         
+  \raggedright
+  \footnotesize Eingereicht am 17. September 2024\\[0.2cm]
+  \normalsize
+  1. Gutachter:\quad Prof. Dr. Wolfhard Janke\\[0.1cm]
+  2. Gutachter:\quad Denis Gessert
+\end{titlepage}
 
 \subsection*{Eigenständigkeitserklärung}
 Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig eigenhändig sowie ohne unerlaubte fremde Hilfe und ausschließlich 
@@ -169,10 +163,8 @@ Leipzig, den 17.09.2024 \\
   \input{results/appendix.tex}
 
 
-
-
 %************************************************************************
 \FloatBarrier %**********************************************************
-\bibliography{references.bib} %***
+\bibliography{references.bib} %******************************************
 \end{document} %*********************************************************
 %************************************************************************
