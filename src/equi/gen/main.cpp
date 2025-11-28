@@ -1,101 +1,128 @@
 #include "system.hpp"
 
+int main(int argc, char *argv[])
+{
+    /***********************************************************************************
+        Simulation Parameter Setup
+        --------------------------
+        Expected cli-arguments:
+            argv[1]: PRNG-seed
+            argv[2]: Temperature
+            argv[3]: Initial state "F" -> ferromagnetic, "H" -> horizontal stripped,
+                     "V" -> vertical stripped or "U" -> uniformly distributed (default)
+            argv[4]: Number of equilibartion sweeps
+            argv[5]: Number of simulation-sweeps
+            argv[6]: Number of sweeps per block
+            argv[7]: Output directory
 
-int main(int argc, char* argv[])
-{  
+        Output directory structure:
+            {Output directory}/L{L}-{state}/T{1000*T}/
+
+        The directory contains:
+            - entire.txt     : full histogram over all sweeps
+            - block_*.txt    : histogram for each block
+            - save.txt       : save-point of the system and parameters
+
+    ***********************************************************************************/
+
     std::ifstream fin;
     std::ofstream fout;
 
+    unsigned int Seed = std::stoul(argv[1]);
+    double T = std::stod(argv[2]);
+    char initial_state = argv[3][0];
+    unsigned int Nequi = std::stoul(argv[4]);
+    unsigned int Nsimu = std::stoul(argv[5]);
+    unsigned int Nsimu_old = 0;
+    unsigned int Nblock = std::stoul(argv[6]);
+    unsigned int Ncurr = 0;
 
-    unsigned int Seed = std::stoul(argv[1]);                                // PRNG-seed
-    double T = std::stod(argv[2]);                                          // Temperature of simulation point
-    char initial_state = argv[3][0];                                        // initial state 
-                                                                            //
-    unsigned int Nequi  = std::stoul(argv[4]);                              // number of equilibartion-sweeps
-    unsigned int Nsimu  = std::stoul(argv[5]); unsigned int Nsimu_old = 0;  // number of simulation-sweeps
-    unsigned int Nblock = std::stoul(argv[6]); unsigned int Ncurr = 0;      // number of sweeps within a block
-    
-    std::string dir = "L" + std::to_string(L) + "-";    dir += initial_state;                               // Creates folder-system:
-    std::system(("mkdir -p " + dir).c_str());           dir += "/T" + std::to_string((int)round(T*1000));   //  './L___-_/T_/' : {lattice-length}, {initial-state}, {Temperature*1000}
-    std::system(("mkdir -p " + dir).c_str());                                                               //  contains:   entire histogram 'entire.txt' 
-                                                                                                            //              blocked histograms 'block_.txt' : {number of block}
-                                                                                                            //              save-point of system and chosen parameter 'save.txt'      
-
-
-
+    std::string dir = argv[7];
+    dir += "/L" + std::to_string(L) + "-" + initial_state;
+    std::system(("mkdir -p " + dir).c_str());
+    dir += "/T" + std::to_string((int)round(T * 1000));
+    std::system(("mkdir -p " + dir).c_str());
 
     System system(initial_state, Seed);
     Histogram histogram;
-    double boltzmannweigh[25];                                          // evaluates boltzmann-factors of chosen temperture
-    for(int i = 0; i < 5; ++i){ 
-        for(int j = 0; j < 5; ++j){
-            *(boltzmannweigh+j+5*i) = exp(-4*(J1*(i-2)+J2*(j-2))/T);
-        } 
+
+    // evaluates boltzmann weights of chosen temperature
+    double boltzmannweights[25];
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            *(boltzmannweights + j + 5 * i) =
+                exp(-4 * (J1 * (i - 2) + J2 * (j - 2)) / T);
+        }
     }
 
-    if(std::filesystem::exists(dir + "/save.txt")){                             
-        std::cout << "SYSTEM LOADED FOR L=" << L << " AND T=" << T << "\n";
+    if (std::filesystem::exists(dir + "/save.txt")) {
+        std::cout << std::boolalpha;
+        std::cout << "Loading previous simulation run for  L=" << L
+                  << ", J2=" << J2 << ", line=" << LINEUPDATE << " and T=" << T
+                  << "...\n";
+        std::cout << std::noboolalpha;
 
-        fin.open(dir + "/save.txt");                        // loads system of previous run
-            fin >> system;
-            fin >> Seed >> Nequi >> Nsimu_old >> Nblock; 
-            Ncurr = Nsimu_old/Nblock;
+        // loads system of previous run
+        fin.open(dir + "/save.txt");
+        fin >> system;
+        fin >> Seed >> Nequi >> Nsimu_old >> Nblock;
+        Ncurr = Nsimu_old / Nblock;
         fin.close();
 
-       
-        fin.open(dir + "/entire.txt");                      // loads entire histogram of previous run
-            fin >> system;
-            fin >> histogram;
+        // loads entire histogram of previous run
+        fin.open(dir + "/entire.txt");
+        fin >> system;
+        fin >> histogram;
         fin.close();
+    } else {
+        // equilibrates new created system
+        std::cout << std::boolalpha;
+        std::cout << "Creating system for L=" << L
+                  << ", J2=" << J2 << ", line=" << LINEUPDATE << " and T=" << T
+                  << "...\n";
+        std::cout << std::noboolalpha;
 
-    }else{                                                                      
-        std::cout << "SYSTEM CREATED FOR L=" << L << " AND T=" << T << "\n";
-        #if LINEUPDATE
-        system.lineupdate(boltzmannweigh, T, Nequi);    // equilibrates new created system
-        #else
-        system.metropolis(boltzmannweigh, Nequi);
-        #endif
+
+
+
+#if LINEUPDATE
+        system.lineupdate(boltzmannweights, T, Nequi);
+#else
+        system.metropolis(boltzmannweights, Nequi);
+#endif
     }
 
-
-
-    //********** Simulation-run **********//
-    for(unsigned int i = 0; i < Nsimu/Nblock; ++i){
+    // simulation run
+    for (unsigned int i = 0; i < Nsimu / Nblock; ++i) {
         Histogram histogramJ;
 
-        for(unsigned int j = 0; j < Nblock; ++j){
-            #if LINEUPDATE
-            system.lineupdate(boltzmannweigh, T);
-            #else
-            system.metropolis(boltzmannweigh);
-            #endif
+        for (unsigned int j = 0; j < Nblock; ++j) {
+#if LINEUPDATE
+            system.lineupdate(boltzmannweights, T);
+#else
+            system.metropolis(boltzmannweights);
+#endif
 
             system.count(histogram);
             system.count(histogramJ);
         }
 
-        fout.open(dir + "/block" + std::to_string(Ncurr+i+1) + ".txt");     // stores blocked histograms
-            fout << histogramJ;
+        // stores blocked histograms
+        fout.open(dir + "/block" + std::to_string(Ncurr + i + 1) + ".txt");
+        fout << histogramJ;
         fout.close();
     }
 
-
-
-
-    fout.open(dir + "/entire.txt");                                         // stores entire histogram
-        fout << histogram;
+    // stores entire histogram
+    fout.open(dir + "/entire.txt");
+    fout << histogram;
     fout.close();
 
-
-
-
-    fout.open(dir + "/save.txt");                                           // stores save-point
-        fout << system << "\n";
-        fout << Seed << " " << Nequi << " " << Nsimu + Nsimu_old << " " << Nblock;
+    // stores save-point
+    fout.open(dir + "/save.txt");
+    fout << system << "\n";
+    fout << Seed << " " << Nequi << " " << Nsimu + Nsimu_old << " " << Nblock;
     fout.close();
 
     return 0;
 }
-
-
-
