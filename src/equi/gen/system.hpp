@@ -86,8 +86,11 @@ class System
         for the Monte Carlo simulation.
 
         Expected arguments:
-            arg[0]: Initial state "F" -> ferromagnetic, "H" -> horizontal stripped,
-                    "V" -> vertical stripped or "U" -> uniformly distributed (default)
+            arg[0]: Initial state 
+                        "F" -> ferromagnetic 
+                        "H" -> horizontal stripped
+                        "V" -> vertical stripped  
+                        "U" -> uniformly distributed (default)
             arg[1]: PRNG seed
 
         Notes
@@ -115,13 +118,13 @@ class System
     ***********************************************************************************/
 
 private:
-    bool *Lattice; // energy
+    bool *Lattice; 
     double Energy;
-    int MagnetizationF; // ferromagnetic
-    int MagnetizationH; // horizontal-stripped
-    int MagnetizationV; // vertical-stripped
+    int MagnetizationF; 
+    int MagnetizationH; 
+    int MagnetizationV; 
 
-    std::mt19937 gen; // PRNG-engine Mersenne-Twister
+    std::mt19937 gen; 
     std::uniform_int_distribution<int> Uds; // single spin selection probability
     std::uniform_int_distribution<int> Udl; // line spin selection probability
     std::uniform_real_distribution<double> Uc; // acceptance probability
