@@ -5,6 +5,7 @@
 bin/*
 !bin/.gitkeep
 
+data/plots/equi/*_g*.txt
 data/raw/dynm/*
 !data/raw/dynm/.gitkeep
 data/raw/equi/*
