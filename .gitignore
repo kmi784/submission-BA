@@ -13,15 +13,13 @@ data/raw/equi/*
 data/snap/*
 !data/snap/.gitkeep
 
-src/tests/current
-src/**/debug
-
 latex/auxiliary
 latex/images/*eps
 latex/images/*pdf
 latex/plots/*.eps
 latex/plots/*.pdf
 
+src/tests/current
+src/**/debug
 
-literature
-anmeldung.pdf
+*.log

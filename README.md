@@ -1,7 +1,27 @@
+# Submission Bachelor Thesis 
+
+This repository contains my Bachelor thesis *Ising model on a square lattice with competing nearest and next-nearest neighbor interactions*. The `pdf`-file [`thesis.pdf`](thesis.pdf) is the manuscript at the time of my submission. After my submission, I revised the repository (I know super nerdy), for better data reproduction. So the Appendix sections A1 und B1 in the manuscript are not up to date, better use this `README` for data reproduction.
+
+```sh
+repo
+|--bin/             # target directory for binaries of the simulation
+|--data/ 
+|  |--plots/        # used data in the manuscript
+|  |--raw/          # output of simulation binaries
+|--latex/           # latex code of the manuscript
+|--sandbox/         # playground for development
+|--src/             
+|  |--dynm/         # source code for simulation/analysis dynamic properties
+|  |--equi/         # source code for simulation/analysis equilibrium properties
+|  |--tests/        # some reference data for development
+|--requirements.txt # python requirements
+|--thesis.pdf       # manuscript
+```
+
 ## Dependencies
 
 ### System requirements
-- c/c++ compiler (`gcc` and `g++`)
+- C++ compiler (`g++`)
 - GNU Make (`make`)
 - gnuplot
 - Python 3.10+
@@ -21,8 +41,17 @@ pip install -r "requirements.txt"
 
 ## Used data
 
+All `txt`-files containing the used data have a `<prefix>` of the following scheme `L<length>-<state>-<algorithm>-*.txt` 
+- `<length>`: lattice length of the system
+- `<state>`: initial state
+    - `F` for ferromagnetic
+    <!--- `H` for horizontal stripped
+    - `V` for vertical stripped-->
+    - `U` for uniformly distributed
+- `<algorithm>`: simulation algorithm
+    - `single`: metropolis
+    - `line`: metropolis + line-update rule 
 
-> **!Attention** The file`<name>-L<length>-<state>-<algorithm>.txt` contains the data of the system with lattice length `<length>`, initial state `<state>` (`F` for ferromagnetic, `U` for uniformly distributed) and the used simulation algorithm `<algorithm>` (`line`, `single`)
 
 ### [`data/plots/dynm/`](data/plots/dynm/)
 
