@@ -1,6 +1,7 @@
 import time
 from pathlib import Path
 
+import gvar as gv
 import numpy as np
 from scipy.optimize import curve_fit
 
@@ -10,9 +11,7 @@ INITIAL_STATE = "U"
 
 
 def _fit_result(value: float, variance: float) -> str:
-    # import gvar as gv
-    # return str(gv.gvar(value, np.sqrt(variance)))
-    return rf"{value}\pm{np.sqrt(variance)}"
+    return str(gv.gvar(value, np.sqrt(variance)))
 
 
 def _power(x, A, Tg, rho):
@@ -37,13 +36,13 @@ def fit_glassy_temperature(
     },
 ) -> None:
     """
-    fits of the relaxation time as function of the temperature to determine the glassy 
+    fits of the relaxation time as function of the temperature to determine the glassy
     transition temperature
 
     Parameters
     ----------
         `target_directory`: `Path`
-            Directory where the raw simulation data is stored of the dynamical 
+            Directory where the raw simulation data is stored of the dynamical
             treatment (low temperature quench)
         `fit_log_append`: `bool`
             If `True` it will append the fit log not overwrite it

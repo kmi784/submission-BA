@@ -114,6 +114,7 @@ The used analysis function for the dynamical treatment are defined in
 
 
 ### `run_equilibrium_analysis` (equilibrium treatment)
+------------------------------------------------------
 runs the data analysis function for the equilibrium treatment
 
 #### *Parameters:*
@@ -137,12 +138,10 @@ The used data analysis binaries und functions are
 
 # Used data
 
-All `txt`-files containing the used data have a `<prefix>` of the following scheme `L<length>-<state>-<algorithm>-*.txt` 
+All `txt`-files containing the data used in manuscript have a `<prefix>` of the following scheme `L<length>-<state>-<algorithm>-*.txt` 
 - `<length>`: lattice length of the system
 - `<state>`: initial state
     - `F` for ferromagnetic
-    <!--- `H` for horizontal stripped
-    - `V` for vertical stripped-->
     - `U` for uniformly distributed
 - `<algorithm>`: simulation algorithm
     - `single`: metropolis

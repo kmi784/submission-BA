@@ -1,18 +1,13 @@
-"""
-fit script for the equilibrium treatment, i.e. 
-"""
-
 import time
 from pathlib import Path
 
+import gvar as gv
 import numpy as np
 from scipy.optimize import curve_fit
 
 
 def _fit_result(value: float, variance: float) -> str:
-    # import gvar as gv
-    # return str(gv.gvar(value, np.sqrt(variance)))
-    return rf"{value}\pm{np.sqrt(variance)}"
+    return str(gv.gvar(value, np.sqrt(variance)))
 
 
 def _power(L, A, rho):
@@ -38,20 +33,26 @@ def fit_universell_law(
     Parameters
     ----------
         `target_directory`: `Path`
-            Directory where the raw simulation data is stored of the equilibrium 
-            treatment 
+            Directory where the raw simulation data is stored of the equilibrium
+            treatment
         `fit_log_append`: `bool`
             If `True` it will append the fit log not overwrite it
         `lowest_datapoint`: `int`
-            Cuts the data of the heat-peaks temperatures  
+            Cuts the data of the heat-peaks temperatures
     """
     with open("fit_equi.log", "a" if fit_log_append else "w") as f:
         f.write(
-            "\n" + 89 * "*" + "\n" f"Target:   {target_directory / "fit.txt"}\n" f"Time:     {time.ctime()}\n\n"
+            "\n" + 89 * "*" + "\n"
+            f"Target:   {target_directory / "fit.txt"}\n"
+            f"Time:     {time.ctime()}\n\n"
         )
 
         L, T, errorT, C, errorC = np.transpose(np.loadtxt(target_directory / "fit.txt"))
-        L, T, errorT = L[lowest_datapoint:], T[lowest_datapoint:], errorT[lowest_datapoint:]
+        L, T, errorT = (
+            L[lowest_datapoint:],
+            T[lowest_datapoint:],
+            errorT[lowest_datapoint:],
+        )
 
         for i in range(0, len(L)):
             f.write(
@@ -74,8 +75,8 @@ def fit_universell_law(
             f"A = {fit1[0]}\nrho = {fit1[1]}\nA = {fit2[0]}\nL0 = {fit2[1]}\n"
         )
 
+
 if __name__ == "__main__":
     fit_universell_law(
         target_directory=Path(__file__).parent.parent.parent / "data/raw/equi",
     )
-

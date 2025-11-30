@@ -21,9 +21,9 @@ SIGNAL_NAMES = {
 ARGS_EQUI = {
     30: {
         "initial state": "U",
-        "number equilibration": 10000,  # int(2.0e7),
-        "number of simulation sweeps": 10000,  # int(5.0e7),
-        "number of sweeps per block": 10000,  # int(5.0e5),
+        "number equilibration": int(2.0e7),
+        "number of simulation sweeps": int(5.0e7),
+        "number of sweeps per block": int(5.0e5),
         "simulation point": {
             0.37: 9481,
             0.386: 8879,
@@ -216,8 +216,8 @@ ARGS_DYNM = {
             "temperature minimum": 0.2,
             "temperature maximum": 0.5,
             "temperature step width": 0.01,
-            "number of changing sweeps": 1000,  # int(1.0e5),
-            "number of simulation sweeps": 1000,  # int(1.0e5),
+            "number of changing sweeps": int(1.0e5),
+            "number of simulation sweeps": int(1.0e5),
             "number of repetitions of dependent run": 50,
         },
         "U": {
