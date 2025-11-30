@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
             argv[4]: Temperature step width
             argv[5]: Initial state "F" -> ferromagnetic, "H" -> horizontal stripped,
                      "V" -> vertical stripped or "U" -> uniformly distributed (default)
-            argv[6]: Number of equilibartion sweeps between temperature change
+            argv[6]: Number of equilibration sweeps between temperature change
             argv[7]: Number of simulation-sweeps
             argv[8]: Number of repetitions of dependent run
             argv[9]: Output directory
@@ -60,8 +60,8 @@ int main(int argc, char* argv[])
             {Output directory}/L{L}-{state}/T{1000*T}/
 
         The directory contains:
-            - accpentence.txt: Rate-sweeps*acceptance
-            - T*.txt         : Spincorrelation
+            - acctentenc.txt: Rate-sweeps*acceptance
+            - T*.txt         : Spin-correlation
 
 
     ***********************************************************************************/
@@ -76,7 +76,8 @@ int main(int argc, char* argv[])
     unsigned int Nruns = std::stoul(argv[8]);
 
     std::string dir = argv[9];
-    dir += "L" + std::to_string(L) + "-"; dir += initial_state;
+    dir += "/L" + std::to_string(L) + "-" + initial_state;
+    dir += (LINEUPDATE) ? "-line" : "-single";
     std::system(("mkdir -p " + dir).c_str());
 
 

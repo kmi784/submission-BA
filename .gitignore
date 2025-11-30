@@ -1,6 +1,7 @@
 .venv
 .vscode
 .astylerc
+__pycache__
 
 bin/*
 !bin/.gitkeep
