@@ -372,3 +372,10 @@ def run_dynamical_simulation(
         f"./dgen{lattice_length}{algorithm}-0.5 {seed} {temp_min} {temp_max} "
         f"{temp_step} {initial_state} {n_chan} {n_simu} {n_repe} {output_directory}"
     )
+
+
+def run_equilibrium_analysis():
+    pass
+
+def run_dynamical_analysis():
+    pass

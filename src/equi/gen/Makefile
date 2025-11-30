@@ -4,7 +4,7 @@ HDR := system.hpp
 D_TRGT := debug
 TRGT := egen
 
-TESTS := ../../tests
+TESTS := ../../helper
 BINARIES := ../../../bin
 
 CXX := g++
