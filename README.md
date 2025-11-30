@@ -1,9 +1,7 @@
-# Submission Bachelor Thesis 
-
 This repository contains my Bachelor thesis *Ising model on a square lattice with competing nearest and next-nearest neighbor interactions*. The `pdf`-file [`thesis.pdf`](thesis.pdf) is the manuscript at the time of my submission. After my submission, I revised the repository (I know super nerdy), for better data reproduction. So the Appendix sections A1 und B1 in the manuscript are not up to date, better use this `README` for data reproduction.
 
-```sh
-repo
+```
+repository
 |--bin/             # target directory for binaries of the simulation
 |--data/ 
 |  |--plots/        # used data in the manuscript
@@ -18,15 +16,15 @@ repo
 |--thesis.pdf       # manuscript
 ```
 
-## Dependencies
+# Dependencies
 
-### System requirements
+## System requirements
 - C++ compiler (`g++`)
 - GNU Make (`make`)
 - gnuplot
 - Python 3.10+
 
-### Python packages
+## Python packages
 - `numpy`
 - `scipy`
 - `gvar`
@@ -35,43 +33,109 @@ repo
 pip install -r "requirements.txt"
 ~~~
 
-## Data generation instructions
+# Data generation instructions
 
-### Compiling 
+## Compiling 
 
 Go to the directory `src/` and hit `make` in the cli. It will compile all needed binaries and store them into `bin/`.
 
-### Generating raw data
+## Generating raw data
 
-Use `src/simulation.py` and the functions
-~~~py
-def run_equilibrium_simulation(
-    lattice_length: int, output_directory: str = None
-) 
-    pass
+Use [`src/simulation.py`](src/simulation.py) and the following python-functions,they will generate the raw data needed for the following data analysis
 
-def run_dynamical_simulation(
-    lattice_length: int, 
-    algorithm: Literal["single", "line"],
-    initial_state: Literal["F", "U"],
-    output_directory: str = None
-) -> None:
-    pass
-~~~
-from the `running`-module. It will generate the raw data needed for 
-the following data analysis.
+### `helper.run_equilibrium_simulation`
+---------------------------------------
+runs the dynamical simulation.
 
-### Data Analysis
+#### *Parameters:*
+- `lattice_length`: `int`
+    - Simulations points are deposed for the lattice lengths 32, 64, 128. For other you have to compile and run manually the corresponding binaries.
+- `algorithm`: `"single"` or `"line"`
+    - `"single"`: metropolis
+    - `"line"`: metropolis + line-update rule
+- `initial_state`: `"F"` or `"U"`
+    - `"F"`: ferromagnetic initial state
+    - `"U"`: uniformly distributed initial state
+- `output_directory`: `str` (absolute or relative path)
+    -  Directory where the raw simulation data is stored. Default `data/raw/dynm/`
 
-#### Dynamical treatment
+#### *Notes:*
+The simulation binaries stores the simulated data with an output directory structure `<output_directory>/L<lattice_length>-U/T<1000*temperature>/` containing
+- `acceptance.txt`: Rate-sweeps*acceptance
+- `T*.txt`         : Spin-correlation
+
+### `helper.run_dynamical_simulation`
+-------------------------------------
+runs the equilibrium simulation (metropolis + line-update)
+
+#### *Parameters:*
+- `lattice_length`: `int`
+    - Simulations points are deposed for the lattice lengths 30, 40, 50, 60, 70, 80, 90, 100, 110, 120. For other you have to compile and run the corresponding binaries.
+- `output_directory`: `str` (absolute or relative path)
+    - Directory where the raw simulation data is stored. Default `data/raw/equi/`
+
+#### *Notes:*
+The simulation binaries stores the simulated data with an output directory structure `<output_directory>/L<lattice_length>-U/T<1000*temperature>/` containing
+- `entire.txt`     : full histogram over all sweeps
+- `block_*.txt`    : histogram for each block
+- `save.txt`       : save-point of the system and parameters
 
 
+## Data Analysis
 
-#### Equilibrium treatment
+It is crucial that the simulated systems. i.e lattice length, initial states and simulation algorithms, matches with the systems deposed in the [dictionaries](src/helper/running.py) `ARGS_EQUI` and `ARGS_DYNM`, because the following data analysis functions highly depend on these dictionaries. 
+
+If you want simulate other systems, you have to do the data analysis manually or add the wanted systems to the dictionaries and of course generate the simulation data with the functions `run_equilibrium_simulation` and `run_dynamical_simulation`.
+
+Use [`src/analysis.py`](src/analysis.py) and the following python-functions,they will generate the finial data.
+
+### `helper.run_dynamical_analysis` (dynamical treatment)
+---------------------------------------------------------
+runs the data analysis function for the dynamical treatment
+
+#### *Parameters:*
+- `target_directory`: `str` (absolute or relative path)
+    - Directory where the raw simulation data is stored of the dynamical treatment, (default `data/raw/dynm/`)
+- `plot_fits_for_relaxation_time`: `bool`
+    - If `True` a multi plot is generated containing via gnuplot containing the exponentially decaying timeseries (order parameter) and its fits, needed for the determination of the relaxation time
+
+#### *Notes:*
+The used analysis function for the dynamical treatment are defined in
+1) `src/dynm/correlation_function.py`
+    - collects the correlation as function of the temperature (high temperature quench)
+    - stores them into `<target_directory>/L*-F-*/autot*.txt`
+2) `src/dynm/relaxation_time.py`
+    - computes the relaxation time as function of the temperature (low temperature quench)
+    - since the determination of the relaxation time uses ranged least square fits of the exponentially decaying timeseries (order parameter), you may want plot these (set `plot_fits_for_relaxation_time=True`)
+    - stores relaxation times into `<target_directory>/L*-U-*/relax.txt`, (optional) generates plots of the fits `<target_directory>/L*-U-*/plot.png` via gnuplot
+3) `src/dynm/fit_relaxation_time.py`
+    - fits of the relaxation time as function of the temperature to determine the glassy transition temperature (low temperature quench)
+    - writes the fit results into `fit_dynm.log`
 
 
+### `run_equilibrium_analysis` (equilibrium treatment)
+runs the data analysis function for the equilibrium treatment
 
-## Used data
+#### *Parameters:*
+- `target_directory`: `str` (absolute or relative path)
+    - Directory where the raw simulation data is stored of the equilibrium treatment, (default `data/raw/equi/`)
+
+#### *Notes:*
+The used data analysis binaries und functions are
+1) `bin/mean`
+    - computes the means and errors (Jackknife analysis) of all measured observables, i.e. energy ferromagnetic/super-antiferromagnetic orderparameter, heat, ferromagnetic super-antiferromagnetic susceptibility, as a function of the temperature
+    - stores these functions into `<target_directory>/L*-U/mean.txt`
+2) `bin/wham`
+    - uses multi-histogram reweighing to obtain smooth curves for the energy ferromagnetic/super-antiferromagnetic orderparameter, heat, ferromagnetic/super-antiferromagnetic susceptibility, as a function of the temperature
+    - stores them into `<target_directory>/L*-U/wham.txt`
+3) `bin/peak`
+    - uses multi-histogram reweighing to determine the heat-peak location per jackknife block an computes its mean and error (jackknife analysis) as function of the lattice length
+    - stores them into `<target_directory>/fit.txt`
+4) `src/equi/fit_heat_peak.py`
+    - fits of the heat-peaks temperatures as function of the lattice length to obtain a universell law
+    - writes the fit results into `fit_equi.log`
+
+# Used data
 
 All `txt`-files containing the used data have a `<prefix>` of the following scheme `L<length>-<state>-<algorithm>-*.txt` 
 - `<length>`: lattice length of the system
@@ -85,7 +149,7 @@ All `txt`-files containing the used data have a `<prefix>` of the following sche
     - `line`: metropolis + line-update rule 
 
 
-### [`data/plots/dynm/`](data/plots/dynm/)
+## [`data/plots/dynm/`](data/plots/dynm/)
 
 - `<prefix>-autot*.txt`
     ~~~
@@ -107,7 +171,7 @@ All `txt`-files containing the used data have a `<prefix>` of the following sche
     ~~~
     > Figures 4.6, 4.10 and 4.11
 
-### [`data/plots/equi/`](data/plots/equi/)
+## [`data/plots/equi/`](data/plots/equi/)
 
 - `<prefix>-mean.txt`
     ~~~

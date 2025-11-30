@@ -318,7 +318,7 @@ def run_dynamical_simulation(
         `algorithm`: `"single"` or `"line"`
             - `"single"`: metropolis
             - `"line"`: metropolis + line-update rule
-        `initial_state`: `"F"` or `"U"
+        `initial_state`: `"F"` or `"U"`
             - `"F"`: ferromagnetic initial state
             - `"U"`: uniformly distributed initial state
         `output_directory`: `str` (absolute or relative path)
@@ -330,8 +330,8 @@ def run_dynamical_simulation(
     The simulation binaries stores the simulated data with an output
     directory structure `<output_directory>/L<lattice_length>-U/T<1000*temperature>/`
     containing
-    - acceptance.txt: Rate-sweeps*acceptance
-    - T*.txt         : Spin-correlation
+    - `acceptance.txt`: Rate-sweeps*acceptance
+    - `T*.txt`         : Spin-correlation
     """
 
     if lattice_length not in ARGS_DYNM:
@@ -481,9 +481,9 @@ def run_equilibrium_simulation(
     The simulation binaries stores the
     simulated data with an output directory structure
     `<output_directory>/L<lattice_length>-U/T<1000*temperature>/` containing
-    - entire.txt     : full histogram over all sweeps
-    - block_*.txt    : histogram for each block
-    - save.txt       : save-point of the system and parameters
+    - `entire.txt`     : full histogram over all sweeps
+    - `block_*.txt`    : histogram for each block
+    - `save.txt`       : save-point of the system and parameters
     """
 
     if lattice_length not in ARGS_EQUI:
