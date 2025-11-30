@@ -9,11 +9,11 @@ D_FLAGS := -std=c++20  -Wall -Wpedantic -Wsign-conversion -O0 -g
 R_FLAGS := -std=c++20 -O2
 
 ifeq ($(basename $(FILE)), mean)
-    ARGS := ../../data/raw/equi/L30-U ./mean.txt 30
+    ARGS := ../../data/raw/equi/L30-U ./mean.txt
 endif
 
 ifeq ($(basename $(FILE)), peak)
-    ARGS := ../../data/raw/equi/L30-U ./peak.txt 50 0.35 0.4 200
+    ARGS := ../../data/raw/equi/L40-U ./peak.txt 50 0.35 0.4 200
 endif
 
 ifeq ($(basename $(FILE)), wham)

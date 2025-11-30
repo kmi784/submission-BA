@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
             argv[1]: 'relative path + name' of target-folder
             argv[2]: 'relative path + name' of output-file
             argv[3]: Number of Jackknife blocks
-            argv[3]: Minimal temperature
-            argv[4]: Maximal temperature
-            argv[5]: Number of output-datapoints
+            argv[4]: Minimal temperature
+            argv[5]: Maximal temperature
+            argv[6]: Number of output-datapoints
 
     ***********************************************************************************/
 

@@ -82,7 +82,6 @@ int main(int argc, char* argv[])
         Expected cli-arguments:
             argv[1]: 'relative path + name' of target-folder
             argv[2]: 'relative path + name' of output-file
-            argv[3]: Lattice length
 
     ***********************************************************************************/
 

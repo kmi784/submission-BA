@@ -39,11 +39,11 @@ pip install -r "requirements.txt"
 
 ### Compiling 
 
-Go to the directory `repo/src` and hit `make` in the cli. It will compile all needed binaries and store them into `repo/bin`.
+Go to the directory `src/` and hit `make` in the cli. It will compile all needed binaries and store them into `bin/`.
 
 ### Generating raw data
 
-Use `repo/src/main.py` and the functions
+Use `src/simulation.py` and the functions
 ~~~py
 def run_equilibrium_simulation(
     lattice_length: int, output_directory: str = None
