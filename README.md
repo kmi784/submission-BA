@@ -37,6 +37,38 @@ pip install -r "requirements.txt"
 
 ## Data generation instructions
 
+### Compiling 
+
+Go to the directory `repo/src` and hit `make` in the cli. It will compile all needed binaries and store them into `repo/bin`.
+
+### Generating raw data
+
+Use `repo/src/main.py` and the functions
+~~~py
+def run_equilibrium_simulation(
+    lattice_length: int, output_directory: str = None
+) 
+    pass
+
+def run_dynamical_simulation(
+    lattice_length: int, 
+    algorithm: Literal["single", "line"],
+    initial_state: Literal["F", "U"],
+    output_directory: str = None
+) -> None:
+    pass
+~~~
+from the `running`-module. It will generate the raw data needed for 
+the following data analysis.
+
+### Data Analysis
+
+#### Dynamical treatment
+
+
+
+#### Equilibrium treatment
+
 
 
 ## Used data

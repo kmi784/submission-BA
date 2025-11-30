@@ -5,9 +5,9 @@ from typing import Literal
 ARGS_EQUI = {
     30: {
         "initial state": "U",
-        "number equilibration": 10000, #int(2.0e7),
-        "number of simulation sweeps": 10000, #int(5.0e7),
-        "number of sweeps per block": 10000, #int(5.0e5),
+        "number equilibration": 10000,  # int(2.0e7),
+        "number of simulation sweeps": 10000,  # int(5.0e7),
+        "number of sweeps per block": 10000,  # int(5.0e5),
         "simulation point": {
             0.37: 9481,
             0.386: 8879,
@@ -200,10 +200,19 @@ ARGS_DYNM = {
             "temperature minimum": 0.2,
             "temperature maximum": 0.5,
             "temperature step width": 0.01,
-            "number of changing sweeps": 100,#int(1.0e5),
-            "number of simulation sweeps": 100,#int(1.0e5),
-            "number of repetitions of dependent run": 10#50,
-        }
+            "number of changing sweeps": int(1.0e5),
+            "number of simulation sweeps": int(1.0e5),
+            "number of repetitions of dependent run": 50,
+        },
+        "U": {
+            "seed": {"single": 3424, "line": 2309},
+            "temperature minimum": 0.3,
+            "temperature maximum": 0.6,
+            "temperature step width": 0.01,
+            "number of changing sweeps": int(5.0e6),
+            "number of simulation sweeps": int(1.0e5),
+            "number of repetitions of dependent run": 4,
+        },
     },
     64: {
         "F": {
@@ -214,7 +223,16 @@ ARGS_DYNM = {
             "number of changing sweeps": int(1.0e5),
             "number of simulation sweeps": int(1.0e5),
             "number of repetitions of dependent run": 50,
-        }
+        },
+        "U": {
+            "seed": {"single": 7533, "line": 1837},
+            "temperature minimum": 0.3,
+            "temperature maximum": 0.6,
+            "temperature step width": 0.01,
+            "number of changing sweeps": int(5.0e6),
+            "number of simulation sweeps": int(1.0e5),
+            "number of repetitions of dependent run": 4,
+        },
     },
     128: {
         "F": {
@@ -239,12 +257,11 @@ ARGS_DYNM = {
 }
 
 
-
 def run_equilibrium_simulation(
     lattice_length: int, output_directory: str = None
 ) -> None:
     """
-    runs the equilibrium simulation (metropolis + line-update), which stores the 
+    runs the equilibrium simulation (metropolis + line-update), which stores the
     simulated data with an output directory structure
     `<output_directory>/L<lattice_length>-U/T<1000*temperature>/` containing
     - entire.txt     : full histogram over all sweeps
@@ -288,15 +305,16 @@ def run_equilibrium_simulation(
             f"{n_simu} {n_jack} {output_directory}"
         )
 
+
 def run_dynamical_simulation(
-    lattice_length: int, 
+    lattice_length: int,
     algorithm: Literal["single", "line"],
     initial_state: Literal["F", "U"],
-    output_directory: str = None
+    output_directory: str = None,
 ) -> None:
     """
-    runs the dynamical simulation, which stores the simulated data with an output 
-    directory structure `<output_directory>/L<lattice_length>-U/T<1000*temperature>/` 
+    runs the dynamical simulation, which stores the simulated data with an output
+    directory structure `<output_directory>/L<lattice_length>-U/T<1000*temperature>/`
     containing
     - acceptance.txt: Rate-sweeps*acceptance
     - T*.txt         : Spin-correlation
@@ -304,14 +322,14 @@ def run_dynamical_simulation(
     Parameters
     ----------
         `lattice_length`: `int`
-            Simulations points are deposed for the lattice lengths 32, 64, 128. For other 
+            Simulations points are deposed for the lattice lengths 32, 64, 128. For other
             you have to compile and run manually the corresponding binaries.
         `algorithm`: `"single"` or `"line"`
-            - `"single"`: metropolis 
+            - `"single"`: metropolis
             - `"line"`: metropolis + line-update rule
         `initial_state`: `"F"` or `"U"
             - `"F"`: ferromagnetic initial state
-            - `"U"`: uniformly distributed initial state (only for `lattice_length=128`)
+            - `"U"`: uniformly distributed initial state
         `output_directory`: `str`
             Directory where the raw simulation data is stored. Default
             `repo/data/raw/dynm/`
@@ -325,7 +343,7 @@ def run_dynamical_simulation(
     elif initial_state not in ARGS_DYNM[lattice_length]:
         raise ValueError(
             f"No simulation parameters are deposited, for initial state"
-            f"'{initial_state}'." 
+            f"'{initial_state}'."
         )
     elif algorithm not in ("single", "line"):
         raise ValueError(
@@ -334,7 +352,7 @@ def run_dynamical_simulation(
         )
     else:
         args = ARGS_DYNM[lattice_length][initial_state]
-    
+
     if output_directory is not None:
         if not os.path.isdir(output_directory):
             raise ValueError(f"Output directory '{output_directory}' does not exists.")
