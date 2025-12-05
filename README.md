@@ -22,7 +22,7 @@ repository
 - C++ compiler (`g++`)
 - GNU Make (`make`)
 - gnuplot
-- Python 3.10+
+- Python 3.12
 
 ## Python packages
 - `numpy`
